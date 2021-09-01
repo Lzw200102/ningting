@@ -42,9 +42,7 @@
         </el-col>
         <!-- 搜索登录 -->
         <el-col :span="9" class="colInput">
-          <el-input class="search" v-model="input" placeholder="请输入内容">
-          </el-input>
-
+          <search></search>
           <div class="login" v-if="isAvatar">
             <router-link to="/logInPage">
               <!-- <div class="el-icon-user">登录</div> -->
@@ -59,10 +57,12 @@
 
 <script>
 import loginStatus from '../logIn/loginStatus'
+import search from '../publicAssembly/search.vue'
 export default {
   inject: ['reload'],
   components: {
-    loginStatus
+    loginStatus,
+    search
   },
   data () {
     return {

@@ -65,8 +65,7 @@ export default {
       this.$router.push({
         name: 'leaderboardDetails',
         query: {
-          id: id,
-          playCount: playCount
+          id: id
         }
       })
     }
