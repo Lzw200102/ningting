@@ -1,9 +1,11 @@
 <template>
-  <div id="app" >
+  <div id="app">
     <!-- 导航栏 -->
-    <navigation-bar></navigation-bar>
-    <!-- 回到顶部 -->
+    <navigation-bar></navigation-bar
+    ><!-- 回到顶部 -->
     <back-to-the-top></back-to-the-top>
+    <!-- 底部音乐播放器 -->
+    <player></player>
     <!-- 通过v-if来控制容器的出现与消失 -->
     <router-view v-if="isRouterAlive" />
   </div>
@@ -11,11 +13,13 @@
 
 <script>
 import navigationBar from './components/publicAssembly/navigationBar.vue'
+import player from './components/publicAssembly/player'
 import backToTheTop from './components/publicAssembly/backToTheTop.vue'
 export default {
-  components: { navigationBar, backToTheTop },
+  components: { navigationBar, player, backToTheTop },
   data () {
     return {
+      ss: false,
       isRouterAlive: true
     }
   },
@@ -46,13 +50,13 @@ export default {
 
 <style>
 /* 全局样式 */
-body{
+body {
   margin: 0 !important;
 }
 * {
-  margin: 0 ;
+  margin: 0;
   padding: 0;
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 ul,
 ol {
@@ -66,5 +70,23 @@ a {
 img {
   border: none;
 }
-
+/* 滚动条 */
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset006pxrgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset006pxrgba(0, 0, 0, 0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 0, 0, 0.4);
+}
 </style>

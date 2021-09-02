@@ -202,7 +202,7 @@ export default {
 </script>
 <style scoped>
 .content {
-  margin: 30px auto 0;
+  margin: 30px auto 130px;
   width: 1260px;
 }
 /* 分页 */

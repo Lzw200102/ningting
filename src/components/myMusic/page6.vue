@@ -13,4 +13,6 @@ export default {
   components: { personal }
 }
 </script>
-<style scoped></style>
+<style scoped>
+
+</style>

@@ -96,6 +96,7 @@ export default {
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
+  margin-bottom: 80px;
 }
 .newSongleft {
   width: 590px;

@@ -1,8 +1,8 @@
 <template>
   <!-- 回到顶部 -->
   <div>
-    <el-backtop>
-      <div class="up">
+    <el-backtop style="bottom:100px">
+      <div class="up" >
         UP
       </div>
     </el-backtop>

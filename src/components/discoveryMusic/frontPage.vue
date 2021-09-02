@@ -63,7 +63,7 @@ export default {
 <style scoped>
 .content {
   width: 1260px;
-  margin: 30px auto;
+  margin: 30px auto ;
 }
 .el-row {
   padding-top: 15px;

@@ -14,18 +14,18 @@
           </div></el-col
         >
       </el-row>
-    </div>
-    <!-- 分页 -->
-    <div class="PagingBox">
-      <div class="paging">
-        <el-pagination
-          background
-          layout=" total,prev,pager,next"
-          :total="dataShow.length"
-          :key="elementui_page_component_key"
-          @current-change="currentChange"
-        >
-        </el-pagination>
+      <!-- 分页 -->
+      <div class="PagingBox">
+        <div class="paging">
+          <el-pagination
+            background
+            layout=" total,prev,pager,next"
+            :total="dataShow.length"
+            :key="elementui_page_component_key"
+            @current-change="currentChange"
+          >
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -120,6 +120,10 @@ export default {
 }
 </script>
 <style scoped>
+.content {
+  margin-bottom: 130px;
+}
+
 .el-col {
   width: 1260px;
   display: flex;

@@ -104,6 +104,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.content{
+  margin-bottom: 130px;
+}
 .el-col {
   width: 1260px;
   margin: 0 auto;

@@ -20,8 +20,7 @@ export default {
 <style scoped>
 .content {
   width: 1260px;
-  margin: 0 auto;
-  margin-top: 30px;
+  margin: 30px auto 0;
 }
 .h2-label {
   margin-top: 30px;
