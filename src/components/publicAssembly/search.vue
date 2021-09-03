@@ -4,13 +4,11 @@
     <el-input
       class="search"
       v-model="keyword"
-      @focus="focus"
-      @blur="blur"
       placeholder="请输入内容"
       @click="
         GotoSearchDetails(keyword),
           GotoSearchSinger(keyword),
-          GotoSearchSinger(keyword)
+          GotoSearchAlbum(keyword)
       "
     />
   </div>

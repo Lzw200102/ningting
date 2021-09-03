@@ -8,7 +8,7 @@
       <!-- 歌曲头像 -->
       <img src="../images/img8.png" alt="" />
       <div class="song">
-        <p>歌曲名</p>
+        <p>{{ datalist }}</p>
         <p>歌手</p>
       </div>
       <!-- 播放按钮 -->
@@ -88,11 +88,31 @@
 export default {
   data () {
     return {
+      // 歌曲进度与音量
       value1: 0,
-      value2: 100
+      value2: 100,
+      //
+      datalist: '',
+      // 音频存放
+      audio: [{}]
     }
   },
-  methods: {}
+  methods: {
+    // 获取歌曲url
+    async getSongUrl () {
+      const result = await this.$http.get('/song/url?id=' + 1873029740)
+      if (result.status !== 200) {
+        return this.$message.error('播放失败！')
+      }
+      if (result.data.code !== 400) {
+        this.datalist = result.data.url
+        console.log('URL' + this.datalist)
+      }
+    }
+  },
+  mounted () {
+    this.getSongUrl()
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -105,12 +125,12 @@ export default {
   z-index: 999999;
 }
 .block {
-  height: 20px;
   /deep/ .el-slider__runway {
     margin: 0;
   }
 }
 .playMiun {
+  height: 65px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -128,6 +148,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-right: 30px;
   }
   .playtioa {
     padding: 0 22px;
