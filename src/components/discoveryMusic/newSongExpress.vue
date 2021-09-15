@@ -8,14 +8,14 @@
       <div class="song">
         <img :src="item.picUrl + '?param=45y45'" alt="" />
         <div class="writing">
-          <p>{{ item.name }}</p>
+          <p class="writing-p">{{ item.name }}</p>
           <p>{{ item.song.artists[0].name }}</p>
         </div>
       </div>
       <!-- 专辑名称 -->
       <div class="album">《{{ item.song.album.name }}》</div>
       <!-- 歌曲时间 -->
-      <div class="time">{{ item.song.mMusic.playTime | GetTime() }}</div>
+      <div class="time">{{ item.song.duration | GetTime() }}</div>
     </div>
   </div>
 </template>
@@ -112,7 +112,7 @@ export default {
     font-size: 25px;
   }
   .song {
-    width: 255px;
+    width: 305px;
     padding-left: 45px;
     display: flex;
     flex-direction: row;
@@ -123,13 +123,19 @@ export default {
     }
     .writing {
       padding-left: 10px;
+      .writing-p {
+        width: 200px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
       p:last-child {
         font-size: 12px;
       }
     }
   }
   .album {
-    width: 235px;
+    width: 180px;
     line-height: 60px;
     left: 20px;
     font-size: 80%;
