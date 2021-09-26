@@ -1,170 +1,101 @@
 <template>
-  <div class="container">
-    <div class="block">
-      <!-- <span class="demonstration">默认</span> -->
-      <el-slider v-model="value1"></el-slider>
-    </div>
-    <div class="playMiun">
-      <!-- 歌曲头像 -->
-      <img src="../images/img8.png" alt="" />
-      <div class="song">
-        <p>{{ datalist }}</p>
-        <p>歌手</p>
-      </div>
-      <!-- 播放按钮 -->
-
-      <div class="playtioa">
-        <p class="el-icon-caret-left"></p>
-        <p class="el-icon-video-play"></p>
-        <p class="el-icon-caret-right"></p>
-      </div>
-      <!-- 歌曲时间 -->
-      <div class="time">
-        00:01/3:25
-      </div>
-      <!-- 音量svg -->
-      <svg
-        t="1630571079757"
-        class="icon"
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="4456"
-        width="32"
-        height="32"
-      >
-        <path
-          d="M678.57 354.629c-2.899-7.727-8.735-14-16.165-17.392-6.076-3.415-13.274-4.894-20.664-3.73-17.586 2.772-29.575 19.424-26.775 37.192a32.633 32.633 0 0 0 15.665 23.092c31.04 33.217 50.144 77.704 50.144 126.763 0 53.682-22.89 101.905-59.287 135.863-6.747 5.821-11.023 14.427-11.023 24.038 0 17.532 14.212 31.744 31.745 31.744 8.975 0 17.074-3.73 22.847-9.718 6.162-3.576 10.97-9.237 13.514-16.031 39.776-43.932 64.222-101.957 64.222-165.894-0.002-63.951-24.448-121.965-64.223-165.927z"
-          p-id="4457"
-        ></path>
-        <path
-          d="M789.633 238.83c-5.28-10.75-16.333-18.152-29.118-18.152-17.908 0-32.426 14.518-32.426 32.427 0 11.755 6.254 22.049 15.619 27.735 54.952 57.502 88.88 135.25 88.88 221.066 0 96.09-42.519 182.079-109.547 240.768l0.125 0.146c-10.517 5.22-17.752 16.063-17.752 28.601 0 17.626 14.289 31.915 31.915 31.915 10.47 0 19.762-5.042 25.582-12.83 0.28-0.333 0.562-0.667 0.831-1.012l0.081 0.08c80.112-70.118 130.969-172.84 130.969-287.667 0.002-101.996-40.095-194.51-105.159-263.076zM448.487 183.722l-159.436 163.13h-97.17c-41.571 0-62.022 22.379-62.022 62.032v206.72c0 39.004 21.098 62.041 62.021 62.041h97.172l159.435 163.11c45.81 43.024 115.523 24.064 115.523-47.366V231.076c0-72.167-70.582-89.47-115.523-47.354z m53.502 577.891c0 46.96-20.817 20.633-42.176-0.446-37.229-36.745-93.477-96.12-139.71-145.564h-86.876c-31.434 0-41.347-10.54-41.347-41.347V450.222c0-30.153 10.56-41.338 41.347-41.338h87.843c45.994-49.707 101.696-108.972 138.903-145.384 21.118-20.664 42.015-47.587 42.015 1.302l0.001 496.811z"
-          p-id="4458"
-        ></path>
-      </svg>
-      <!-- 音量条 -->
-      <div class="volume"><el-slider v-model="value2"></el-slider></div>
-      <!-- 播放顺序 -->
-      <div class="playOrder">
-        <svg
-          t="1630574894246"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="1204"
-          width="16"
-          height="16"
-        >
-          <path
-            d="M247.7 70.7c8 7.6 9.2 19.6 3.4 28.5l-2.5 3.2-106.2 112.1h635c93.7 0 170.1 73.6 174.8 166l0.2 9v19.1c0 12.4-10 22.4-22.4 22.4-11 0-20.1-7.9-22-18.4l-0.4-4v-19.1c0-69.4-54.2-126.1-122.6-130.1l-7.7-0.2h-687l-2.3-0.1-3.2-0.6-3.6-1.3-1.9-0.9-1.7-1.1-2.7-2.2c-1.3-1.2-2.4-2.6-3.4-4l-1.4-2.5-1.4-3.7-0.7-3.9-0.1-2.1c0-1.5 0.1-2.9 0.4-4.3l1.1-3.9 2.1-4.1 2.5-3.2L216 71.5c8.5-8.9 22.7-9.3 31.7-0.8zM243 762.5h687.4c1.1 0 2.5 0.1 3.8 0.4 2.2 0.4 4.3 1.1 6.3 2.2l3.5 2.3 2.9 2.7 2.3 3 1.6 3.2 1.2 3.9 0.5 3.9v0.8c0 2.8-0.5 5.4-1.4 7.9l-1.7 3.6-2.4 3.3-133.3 153c-8.1 9.3-22.3 10.3-31.6 2.2-8.3-7.2-10-19.2-4.5-28.3l2.4-3.3 101-115.9H243.2c-93.7 0-170.1-73.6-174.8-166l-0.2-9v-19.1c0-12.4 10-22.4 22.4-22.4 11 0 20.1 7.9 22 18.4l0.4 4v19.1c0 69.4 54.2 126.1 122.6 130.1h7.4z"
-            p-id="1205"
-          ></path>
-        </svg>
-      </div>
-      <!-- 歌单列表 -->
-      <div class="songList">
-        <svg
-          t="1630571293017"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="5957"
-          width="32"
-          height="32"
-        >
-          <path
-            d="M184.685714 775.314286H841.142857v23.771428H184.685714zM184.685714 568.685714H841.142857v23.771429H184.685714zM362.057143 362.057143H841.142857v23.771428H362.057143zM182.857143 502.857143V235.885714l155.428571 133.485715-155.428571 133.485714z m12.8-234.057143v201.142857l122.514286-100.571428-122.514286-100.571429z"
-            p-id="5958"
-            fill="#2c2c2c"
-          ></path>
-        </svg>
-      </div>
-    </div>
+  <div>
+    <!-- 播放标签 -->
+    <p>总时长：{{ duration }}</p>
+    <p>当前时长：{{ currentTime }}</p>
+    <audio controls ref="singeBox"></audio>
   </div>
 </template>
 <script>
 export default {
   data () {
     return {
-      // 歌曲进度与音量
-      value1: 0,
-      value2: 100,
       //
-      datalist: '',
-      // 音频存放
-      audio: [{}]
+      aa: 0,
+      duration: undefined, // 音乐总时长
+      currentTime: undefined, // 当前播放时长
+      box: undefined, // audio对象
+      musicPath: '', // mp3链接
+      coverPath: '', // 封面
+      musicTitle: '', // 当前播放标题
+      musicImg: '', //  当前播放封面
+      list: [
+        // 数据格式
+        {
+          id: 1,
+          name: '所说的话',
+          url:
+            'http://m10.music.126.net/20210917171703/31e6c209cbe7c999feb4ea7843fd2dea/ymusic/a9c1/47f7/e72a/eeca0e403e1aa21dc60ca590be3db3f0.mp3',
+          cover: '../images/img2.jpg',
+          singer: '谌宥',
+          time: '04:12'
+        }
+      ]
+    }
+  },
+  watch: {
+    aa () {
+      this.updateTime()
     }
   },
   methods: {
-    // 获取歌曲url
-    async getSongUrl () {
-      const result = await this.$http.get('/song/url?id=' + 1873029740)
-      if (result.status !== 200) {
-        return this.$message.error('播放失败！')
+    init () {
+      this.box = this.$refs.singeBox
+      this.box.src = this.list[0].url // 歌曲链接
+      // 绑定三个触发方法
+      // 当时长有变化时触发，由"NaN"变为实际时长也算
+      this.box.ondurationchange = function () {
+        console.log('时长发生了变化')
       }
-      if (result.data.code !== 400) {
-        this.datalist = result.data.url
-        console.log('URL' + this.datalist)
+      // 当前数据可用是触发
+      this.box.oncanplay = function () {
+        console.log('已经可以播放了')
+      }
+      // 播放位置发送改变时触发。
+      this.box.ontimeupdate = function () {
+        console.log('播放位置发送了变动')
+        this.aa = ++aa
+        console.log(this.aa)
+      }
+      // 音频播放完毕
+      this.box.onended = function () {
+        console.log('播放完毕，谢谢收听')
+      }
+      // 音频播放完毕
+      this.box.onerror = function () {
+        console.log('加载出错！')
+      }
+    },
+    updateTime () {
+      // 更新时间
+      const total = this.formatTime(this.box.duration)
+      const current = this.formatTime(this.box.currentTime)
+      this.duration = `${total.min}:${total.sec}`
+      this.currentTime = `${current.min}:${current.sec}`
+      this.musicTitle =
+        this.list[this.index].name + ' - ' + this.list[this.index].singer
+      this.musicImg = this.coverPath + this.list[this.index].cover + '.jpg'
+    },
+    // 格式化播放时间
+    formatTime (time) {
+      // 格式化毫秒，返回String型分秒对象
+      // 有可能没获取到，为NaN
+      if (!time) return { min: '00', sec: '00' }
+      return {
+        min: Math.floor(time / 60)
+          .toString()
+          .padStart(2, '0'),
+        sec: Math.floor(time % 60)
+          .toString()
+          .padStart(2, '0')
       }
     }
   },
+  // mounted 页面进入是完成初始化
   mounted () {
-    this.getSongUrl()
+    this.init()
+    this.updateTime()
   }
 }
 </script>
-<style lang="less" scoped>
-.container {
-  width: 100%;
-  height: auto;
-  position: fixed;
-  bottom: 0;
-  background-color: rgb(104, 209, 195);
-  z-index: 999999;
-}
-.block {
-  /deep/ .el-slider__runway {
-    margin: 0;
-  }
-}
-.playMiun {
-  height: 65px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  & > *:hover {
-    cursor: pointer;
-  }
-  img {
-    width: 60px;
-    height: 60px;
-    border-radius: 20px;
-    margin-right: 10px;
-  }
-  .song {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-right: 30px;
-  }
-  .playtioa {
-    padding: 0 22px;
-    font-size: 45px;
-  }
-  .time {
-    padding-right: 20px;
-    font-size: 18px;
-    line-height: 60px;
-  }
-  .volume {
-    padding-right: 20px;
-    width: 150px;
-  }
-  .playOrder {
-    padding-right: 10px;
-  }
-}
-</style>
+<style lang="less" scoped></style>

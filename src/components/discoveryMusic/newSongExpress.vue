@@ -3,7 +3,11 @@
   <div class="content-newSongleft">
     <div class="newSongleft" v-for="(item, i) in latestsong" :key="i">
       <!-- 播放按钮 -->
-      <div class="el-icon-video-play"></div>
+      <div
+        class="el-icon-video-play"
+        id="playButton"
+        @click="playSong(item.id)"
+      ></div>
       <!-- 歌曲图片、歌名、歌手 -->
       <div class="song">
         <img :src="item.picUrl + '?param=45y45'" alt="" />
@@ -62,7 +66,7 @@ export default {
     // 播放音乐
     playSong (id) {
       playMisic(id).then(musicdata => {
-        // 通过事件总线把歌曲数据传给跟组件
+        // 通过事件总线把歌曲数据传给根组件
         this.$bus.$emit('getMusicMessage', { musicdata, id })
         let newsData = {
           picUrl: musicdata.picUrl,
@@ -72,10 +76,10 @@ export default {
         // 将当前播放的音乐数据传给vuex进行管理
         this.$store.commit('setMusicData', newsData)
         // 路由跳转到歌曲详情并携带相关参数
-        this.$router.push({
-          name: 'SongDetails',
-          query: { id: id, data: newsData }
-        })
+        // this.$router.push({
+        //   name: 'SongDetails',
+        //   query: { id: id, data: newsData }
+        // })
       })
     },
     // 热门歌手
@@ -139,9 +143,19 @@ export default {
     line-height: 60px;
     left: 20px;
     font-size: 80%;
+    // 多余的
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .time {
     line-height: 60px;
+  }
+}
+// 新歌速递的播放按钮
+#playButton {
+  &:hover {
+    cursor: pointer;
   }
 }
 </style>
