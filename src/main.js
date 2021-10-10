@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+// 引入阿里图片iocn
+import './assets/iocn/iconfont.css'
 // 引入element// 导入message
 import ElementUI, { Message } from 'element-ui'
 // 引入elementUI
@@ -17,7 +19,9 @@ Vue.prototype.$message = Message
 Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 // 配置请求的跟路径
-axios.defaults.baseURL = 'http://bao.lqjhome.cn:3000'
+axios.defaults.baseURL = 'http://localhost:3000/'
+// 跨域优化
+// axios.defaults.headers.get['Content-Type'] = 'text/html '
 // 全局配置  挂载到vue的原型对象上  这样每个vue组件都可以通过this.$http 使用axios
 Vue.prototype.$http = axios
 // 注册事件总线

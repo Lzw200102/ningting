@@ -15,7 +15,7 @@ function GetPlayMisicMessage (ids) {
   return request({
     url: '/song/detail',
     params: {
-      id
+      ids
     }
   })
 }

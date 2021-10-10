@@ -29,7 +29,6 @@ export default {
     就是父组件中使用provide提供变量(对象或者是一个函数),在子组件中通过inject来注入变量
     不管层级有多深，并在起上下游关系成立的时间始终生效
   */
-
   provide () {
     return {
       reload: this.reload // 把刷新方法传给子组件

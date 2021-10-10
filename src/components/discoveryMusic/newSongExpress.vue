@@ -60,7 +60,7 @@ export default {
     GetLatestSong () {
       GetLatestSong().then(res => {
         this.latestsong = res.result
-        console.log(this.latestsong)
+        // console.log(this.latestsong)
       })
     },
     // 播放音乐

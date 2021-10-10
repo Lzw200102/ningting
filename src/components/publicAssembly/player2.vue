@@ -1,166 +1,310 @@
 <template>
   <div class="container">
     <!-- 进度条 -->
+    <audio src="MusicUrl"></audio>
     <div class="block">
-      <audio ref="audio" autoplay></audio>
-      <!-- <span class="demonstration">默认</span> -->
-      <el-slider v-model="value1"></el-slider>
+      <audio ref="singeBox"></audio>
+      <el-slider
+        v-model="sliderVal"
+        :format-tooltip="formatTooltip"
+        :min="sliderMin"
+        :max="sliderMax"
+        @change="spliderSelect"
+      />
     </div>
     <div class="playMiun">
       <!-- 歌曲头像 -->
-      <img src="../images/img8.png" alt="" />
+      <img :src="musicImg" alt="" />
       <div class="song">
-        <p>周慧敏</p>
-        <p>歌手</p>
+        <span>{{ musicTitle }}</span>
+        <p>{{ musicSinger }}</p>
       </div>
       <!-- 播放按钮 -->
       <div class="playtioa">
-        <p class="el-icon-caret-left"></p>
-        <p class="el-icon-video-play"></p>
-        <p class="el-icon-caret-right"></p>
+        <span @click="musicPlay('pre')">
+          <p class="iconfont icon-icon-3"></p>
+        </span>
+        <span @click="musicPlay('play')">
+          <p v-if="play == false" class="iconfont icon-icon-8"></p>
+          <p v-else class="iconfont icon-icon-4"></p>
+        </span>
+        <span @click="musicPlay('next')">
+          <p class="iconfont icon-icon-1"></p>
+        </span>
       </div>
       <!-- 歌曲时间 -->
       <div class="time">
-        00:01/3:25
+        <p>{{ currentTime }}</p>
+        /
+        <p>{{ duration }}</p>
       </div>
-      <!-- 音量svg -->
-      <svg
-        t="1630571079757"
-        class="icon"
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="4456"
-        width="32"
-        height="32"
-      >
-        <path
-          d="M678.57 354.629c-2.899-7.727-8.735-14-16.165-17.392-6.076-3.415-13.274-4.894-20.664-3.73-17.586 2.772-29.575 19.424-26.775 37.192a32.633 32.633 0 0 0 15.665 23.092c31.04 33.217 50.144 77.704 50.144 126.763 0 53.682-22.89 101.905-59.287 135.863-6.747 5.821-11.023 14.427-11.023 24.038 0 17.532 14.212 31.744 31.745 31.744 8.975 0 17.074-3.73 22.847-9.718 6.162-3.576 10.97-9.237 13.514-16.031 39.776-43.932 64.222-101.957 64.222-165.894-0.002-63.951-24.448-121.965-64.223-165.927z"
-          p-id="4457"
-        ></path>
-        <path
-          d="M789.633 238.83c-5.28-10.75-16.333-18.152-29.118-18.152-17.908 0-32.426 14.518-32.426 32.427 0 11.755 6.254 22.049 15.619 27.735 54.952 57.502 88.88 135.25 88.88 221.066 0 96.09-42.519 182.079-109.547 240.768l0.125 0.146c-10.517 5.22-17.752 16.063-17.752 28.601 0 17.626 14.289 31.915 31.915 31.915 10.47 0 19.762-5.042 25.582-12.83 0.28-0.333 0.562-0.667 0.831-1.012l0.081 0.08c80.112-70.118 130.969-172.84 130.969-287.667 0.002-101.996-40.095-194.51-105.159-263.076zM448.487 183.722l-159.436 163.13h-97.17c-41.571 0-62.022 22.379-62.022 62.032v206.72c0 39.004 21.098 62.041 62.021 62.041h97.172l159.435 163.11c45.81 43.024 115.523 24.064 115.523-47.366V231.076c0-72.167-70.582-89.47-115.523-47.354z m53.502 577.891c0 46.96-20.817 20.633-42.176-0.446-37.229-36.745-93.477-96.12-139.71-145.564h-86.876c-31.434 0-41.347-10.54-41.347-41.347V450.222c0-30.153 10.56-41.338 41.347-41.338h87.843c45.994-49.707 101.696-108.972 138.903-145.384 21.118-20.664 42.015-47.587 42.015 1.302l0.001 496.811z"
-          p-id="4458"
-        ></path>
-      </svg>
+      <!-- 音量 -->
+      <i class="iconfont icon-icon-2"></i>
       <!-- 音量条 -->
-      <div class="volume"><el-slider v-model="value2"></el-slider></div>
+      <el-slider class="volume"></el-slider>
       <!-- 播放顺序 -->
-      <div class="playOrder">
-        <svg
-          t="1630574894246"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="1204"
-          width="16"
-          height="16"
-        >
-          <path
-            d="M247.7 70.7c8 7.6 9.2 19.6 3.4 28.5l-2.5 3.2-106.2 112.1h635c93.7 0 170.1 73.6 174.8 166l0.2 9v19.1c0 12.4-10 22.4-22.4 22.4-11 0-20.1-7.9-22-18.4l-0.4-4v-19.1c0-69.4-54.2-126.1-122.6-130.1l-7.7-0.2h-687l-2.3-0.1-3.2-0.6-3.6-1.3-1.9-0.9-1.7-1.1-2.7-2.2c-1.3-1.2-2.4-2.6-3.4-4l-1.4-2.5-1.4-3.7-0.7-3.9-0.1-2.1c0-1.5 0.1-2.9 0.4-4.3l1.1-3.9 2.1-4.1 2.5-3.2L216 71.5c8.5-8.9 22.7-9.3 31.7-0.8zM243 762.5h687.4c1.1 0 2.5 0.1 3.8 0.4 2.2 0.4 4.3 1.1 6.3 2.2l3.5 2.3 2.9 2.7 2.3 3 1.6 3.2 1.2 3.9 0.5 3.9v0.8c0 2.8-0.5 5.4-1.4 7.9l-1.7 3.6-2.4 3.3-133.3 153c-8.1 9.3-22.3 10.3-31.6 2.2-8.3-7.2-10-19.2-4.5-28.3l2.4-3.3 101-115.9H243.2c-93.7 0-170.1-73.6-174.8-166l-0.2-9v-19.1c0-12.4 10-22.4 22.4-22.4 11 0 20.1 7.9 22 18.4l0.4 4v19.1c0 69.4 54.2 126.1 122.6 130.1h7.4z"
-            p-id="1205"
-          ></path>
-        </svg>
-      </div>
+      <div class="playOrder"><p class="iconfont icon-icon-6"></p></div>
       <!-- 歌单列表 -->
       <div class="songList">
-        <svg
-          t="1630571293017"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="5957"
-          width="32"
-          height="32"
-        >
-          <path
-            d="M184.685714 775.314286H841.142857v23.771428H184.685714zM184.685714 568.685714H841.142857v23.771429H184.685714zM362.057143 362.057143H841.142857v23.771428H362.057143zM182.857143 502.857143V235.885714l155.428571 133.485715-155.428571 133.485714z m12.8-234.057143v201.142857l122.514286-100.571428-122.514286-100.571429z"
-            p-id="5958"
-            fill="#2c2c2c"
-          ></path>
-        </svg>
+        <el-popover placement="top" width="28%" trigger="click">
+          <!-- 歌单展示  -->
+          <el-table :data="audio" stripe style="width: 100%">
+            <el-table-column label="" width="40" align="center">
+              <template #default="{ row }">
+                <span>{{ row.index }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="歌曲标题">
+              <template #default="{ row }">
+                <span>{{ row.title }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="时间" align="center">
+              <template #default="{ row }">
+                <span>{{ row.time }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="歌手">
+              <template #default="{ row }">
+                <span>{{ row.artist }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="" align="center">
+              <template #default="{ row }">
+                <span class="music-btn"
+                  ><i
+                    :class="
+                      player[row.id] && player[row.id].play
+                        ? 'iconfont icon-icon-4'
+                        : 'iconfont icon-icon-8'
+                    "
+                    @click="handlerPlay(row.id)"
+                  ></i
+                ></span>
+              </template>
+            </el-table-column>
+          </el-table>
+          <p class="iconfont icon-icon-" slot="reference"></p>
+        </el-popover>
       </div>
     </div>
   </div>
 </template>
 <script>
+// import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      // 歌曲进度与音量
-      value1: 0,
-      value2: 100,
-      // 歌手
-      datalist: '',
-      // 歌曲名
-      songName: '',
+      player: {}, // 对象控制list谁在播放
+      index: 0, // 当前播放的音乐索引
+      play: false, // 播放状态，true为正在播放
+      sliderVal: 0, // 当前时间，这个对接当前时长。
+      sliderMin: 0,
+      sliderMax: 0, // 总时间，这个对接总时长。
+      duration: undefined, // 音乐总时长
+      currentTime: undefined, // 当前播放时长
+      box: undefined, // audio对象
+      musicPath: 'http://bao.lqjhome.cn:3000', // mp3链接
+      coverPath: '', // 封面
+      musicTitle: '', // 当前播放标题
+      musicSinger: '', // 当前播放的歌手
+      musicImg: '', //  当前播放封面
       //
-      playStatus: false, // 播放状态，用来控制播放、暂停按钮的显示
-      Timer: '', // 定时器，我们需要实时监听到歌曲的播放进度
-      currentBar: 0, // 进度条长度，默认为0，根据歌曲进度同步更新
-      currentText: '00:00', // 进度条旁边的播放时间，同样要实时更新
-      durationText: '00:00', // 当前歌曲的播放时长
-      listShow: false, // 控制播放列表的显示
-      loopStyle: 'list' // not:单曲播放 list:列表循环 single:单曲循环 random:随机循环
+      // 音频数据存放在次
+      audio: [{}],
+      musicdata: {},
+      SongId: null,
+      aplayerFlag: false
     }
   },
-  // 从store中获取:使用computed的原因是当stata改变时，可以重新执行下面方法
-  computed: {
-    // 当前播放信息
-    songContent () {
-      return this.$store.state.playContent
-    },
-    // 播放列表信息
-    playList () {
-      return this.$store.state.playList
-    }
-  },
-  watch: {
-    songContent () {
-      this.playSong(this.songContent) // 传入当前播放歌曲对象
-    }
+  created () {
+    // 接收音乐数据
+    this.$bus.$on('getMusicMessage', val => {
+      // 上移音乐组件
+      // this.DisplayMusicComponent()
+      //  获取得到的音乐数据
+      var data = {
+        src: val.musicdata.playUrl,
+        title: val.musicdata.picname,
+        artist: val.musicdata.Singer,
+        pic: val.musicdata.picUrl,
+        lrc: val.musicdata.lyric,
+        id: val.id
+      }
+      // 保存音乐数据对象 和 当前播放歌曲Id
+      this.musicdata = data
+      this.SongId = val.id
+      // 把接收到的音乐数据添加到audio[0]中  令播放组件获取数据后进入待播放
+      // this.$set(this.audio,0,data)
+      // 防止重复传入
+      if (data.id === this.audio[0].id) {
+        return null
+      } else {
+        this.audio.unshift(data)
+        this.init()
+      }
+    })
   },
   methods: {
-    // 对播放控件上的信息进行一个初始化渲染
-    // 初始化播放歌曲
-    playSong (obj) {
-      this.durationText = obj.dt
-      this.playStatus = true
-      this.currentText = '00:00'
-      this.currentBar = 0
-      let song_url =
-        'https://api.imjad.cn/cloudmusic/?type=song&id=' + 1873029740
-      this.getSong(song_url) // 获取歌曲资源
-    },
-    // 获取歌曲资源并播放
-    getSong (url) {
-      this.$axios
-        .get(url)
-        .then(
-          res => (
-            (this.$refs.audio.src = res.data.data[0].url),
-            this.setTimer() // 设置定时器
-          )
-        )
-        .catch(function (err) {
-          console.log(err)
-        })
-    },
-    // 获取歌曲url
-    async getSongUrl () {
-      const result = await this.$http.get('/song/url?id=' + 1873029740)
-      if (result.status !== 200) {
-        return this.$message.error('播放失败！')
+    // 上移音乐组件
+    // DisplayMusicComponent () {
+    //   // 显示音乐图标
+    //   setTimeout(() => {
+    //     // this.play = true
+    //   }, 100)
+    //   // 音乐组件做一次上移操作
+    //   {
+    //     let Aplayer = document.querySelector('.container')
+    //     let strat = -90
+    //     let end = -5
+    //     let timer = setInterval(() => {
+    //       if (!this.aplayerFlag) {
+    //         Aplayer.setAttribute('style', 'bottom:' + ++strat + 'px')
+    //         if (strat == end) {
+    //           // 上移操作只会执行一次
+    //           this.aplayerFlag = true
+    //           // 清空定时器
+    //           clearInterval(timer)
+    //         }
+    //       } else return
+    //     }, 1)
+    //   }
+    // },
+    // 监听歌曲
+    init () {
+      this.box = this.$refs.singeBox
+      this.box.src = this.musicdata.src
+      // 绑定三个触发方法
+      // 当时长有变化时触发，由"NaN"变为实际时长也算
+      this.box.ondurationchange = () => {
+        console.log('时长发生了变化')
+        this.play ? this.box.play() : this.box.pause()
+        // 更新时间
+        this.updateTime()
       }
-      if (result.data.code !== 400) {
-        this.datalist = result.data.url
+      // 当前数据可用是触发
+      this.box.oncanplay = () => {
+        this.play ? this.box.play() : this.box.pause()
+        console.log('已经可以播放了')
+        // 播放歌曲
+        this.musicPlay('play')
+      }
+      // 播放位置发送改变时触发。
+      this.box.ontimeupdate = () => {
+        console.log('播放位置发送了变动')
+        this.updateTime()
+      }
+      // 音频播放完毕
+      this.box.onended = () => {
+        console.log('播放完毕，谢谢收听')
+      }
+      // 音频播放完毕
+      this.box.onerror = function () {
+        console.log('加载出错！')
+      }
+    },
+    // 更新时间、数据
+    updateTime () {
+      const total = this.formatTime(this.box.duration)
+      const current = this.formatTime(this.box.currentTime)
+      this.duration = `${total.min}:${total.sec}`
+      this.currentTime = `${current.min}:${current.sec}`
+      // 将xx.xxx的值取整
+      this.sliderVal = Math.floor(this.box.currentTime)
+      this.sliderMax = Math.floor(this.box.duration)
+      // 更新歌名、歌手、图片
+      this.musicTitle = this.musicdata.title
+      this.musicSinger = this.musicdata.artist
+      this.musicImg = this.musicdata.pic
+    },
+    // 格式化播放时间
+    formatTime (time) {
+      // 格式化毫秒，返回String型分秒对象
+      // 有可能没获取到，为NaN
+      if (!time) return { min: '00', sec: '00' }
+      return {
+        min: Math.floor(time / 60)
+          .toString()
+          .padStart(2, '0'),
+        sec: Math.floor(time % 60)
+          .toString()
+          .padStart(2, '0')
+      }
+    },
+    formatTooltip (val) {
+      // 格式化毫秒数，由于组件提示为纯数字，所以这里需要将数字转化为我们所需要的的格式，string类型的。'03:45',
+      const time = this.formatTime(val)
+      return `${time.min}:${time.sec}`
+    },
+    spliderSelect () {
+      // 滑块松动后触发。更新当前时长，
+      // 时长发生变动会init里的方法进行更新数据
+      this.box.currentTime = this.sliderVal
+    },
+    // 底部歌单点击事件
+    handlerPlay (id) {
+      console.log(this.player)
+      if (!this.player[id]) {
+        // 没值触发新的播放
+        const i = this.audio.findIndex(x => x.id === id)
+        this.index = i
+        this.play = false
+      }
+      this.musicPlay('play')
+    },
+    // 上一首，暂停播放，下一首
+    musicPlay (flag) {
+      switch (flag) {
+        case 'pre':
+          if (this.audio[this.index - 1]) {
+            this.musicdata = this.audio[this.index - 1]
+            this.box.src = this.musicdata.src
+            this.index -= 1
+          } else {
+            this.musicdata = this.audio[0]
+            this.box.src = this.musicdata.src
+            this.index = 0
+          }
+          break
+        case 'play':
+          this.play = !this.play
+          // 对接控件 同步 列表里的控件
+          if (this.player[this.audio[this.index].id]) {
+            this.player[this.audio[this.index].id].play = this.play
+            console.log('1' + this.player[this.audio[this.index].id].play)
+          }
+          // 新的歌曲播放
+          if (this.play && !this.player[this.audio[this.index].id]) {
+            this.musicdata = this.audio[this.index]
+            this.init()
+            console.log('2' + this.player[this.audio[this.index].id])
+          }
+          break
+        case 'next':
+          if (this.audio[this.index + 1]) {
+            this.musicdata = this.audio[this.index + 1]
+            this.box.src = this.musicdata.src
+            this.index += 1
+            console.log(this.audio.length + '///')
+          } else {
+            this.musicdata = this.audio[this.index]
+            console.log('最后一首')
+          }
+          break
+      }
+      if (this.play && !this.player[this.audio[this.index].id]) {
+        this.player = {}
+        this.player[this.audio[this.index].id] = {}
+        this.player[this.audio[this.index].id].play = true
+      } else {
+        this.play ? this.box.play() : this.box.pause()
       }
     }
   },
+  // mounted 页面进入是完成初始化
   mounted () {
-    this.getSongUrl()
+    this.init()
+    this.updateTime()
   }
 }
 </script>
@@ -190,23 +334,33 @@ export default {
   img {
     width: 60px;
     height: 60px;
-    border-radius: 20px;
+    border-radius: 50%;
     margin-right: 10px;
   }
   .song {
+    width: 8%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-right: 30px;
   }
   .playtioa {
-    padding: 0 22px;
+    width: 9%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     font-size: 45px;
   }
   .time {
     padding-right: 20px;
     font-size: 18px;
     line-height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    p {
+      font-size: 16px;
+    }
   }
   .volume {
     padding-right: 20px;
@@ -216,4 +370,18 @@ export default {
     padding-right: 10px;
   }
 }
+
+// 阿里图片样式
+.iconfont {
+  font-size: 2rem;
+}
+.icon-icon-2 {
+  padding: 0 10px;
+}
+</style>
+<style>
+/* .el-popover弹出框不在app.vue中所以需要全局设置 */
+/* .el-popover {
+  top: 10px !important;
+} */
 </style>
