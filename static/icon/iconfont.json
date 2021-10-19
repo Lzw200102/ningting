@@ -6,6 +6,20 @@
   "description": "仿网易云音乐",
   "glyphs": [
     {
+      "icon_id": "5090378",
+      "name": "柠檬",
+      "font_class": "ningmeng1",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "23070801",
+      "name": "面性柠檬",
+      "font_class": "mianxingningmeng",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
       "icon_id": "3195596",
       "name": "柠檬",
       "font_class": "ningmeng",

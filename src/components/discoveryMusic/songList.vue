@@ -7,8 +7,9 @@
           class="grid-content bg-purple"
           v-for="(v, i) of Recommendresult"
           :key="i"
+          @click="songListDetails(v.id)"
         >
-          <img :src="v.coverImgUrl" alt="" class="imgs" />
+          <img  v-lazy="v.coverImgUrl" alt="" class="imgs" />
           <h6>{{ v.name }}</h6>
           <p>{{ v.nickname }}</p>
         </div></el-col
@@ -24,7 +25,6 @@ export default {
   data () {
     return {
       // 歌单分类 默认值
-
       order: 'hot',
       cat: '全部',
       limit: '48',
@@ -49,6 +49,15 @@ export default {
       return setTimeout(() => {
         this.GetPlaylistContent()
       }, 10)
+    },
+    // 去歌单详情
+    songListDetails (id) {
+      this.$router.push({
+        name: 'songListDetails',
+        query: {
+          id: id
+        }
+      })
     }
   },
   mounted () {
@@ -76,11 +85,15 @@ export default {
   margin: 10px 10px 0 10px;
   width: 190px;
   height: auto;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .bg-purple img {
   width: 190px;
   height: 190px;
   border: 0 solid white;
   border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
 }
 </style>

@@ -101,11 +101,10 @@ export default {
         let userdata = {
           token,
           cookie,
-          id: this.id
+          id: this.id,
         }
         // 使用事件总线
         this.$bus.$emit('getUserData', userdata)
-        this.$bus.$emit('getUserid', this.id)
       })
     }
   }

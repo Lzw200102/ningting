@@ -1,88 +1,104 @@
 <template>
-  <div class="container">
-    <!-- 进度条 -->
-    <audio src="MusicUrl"></audio>
-    <div class="block">
-      <audio ref="singeBox"></audio>
-      <el-slider
-        v-model="sliderVal"
-        :format-tooltip="formatTooltip"
-        :min="sliderMin"
-        :max="sliderMax"
-        @change="spliderSelect"
-      />
-    </div>
-    <div class="playMiun">
-      <!-- 歌曲头像 -->
-      <img :src="musicImg" alt="" />
-      <div class="song">
-        <span>{{ musicTitle }}</span>
-        <p>{{ musicSinger }}</p>
+<!-- 公共 播放器 -->
+  <div>
+    <img
+      class="trigger"
+      src="../images/music.png"
+      alt=""
+      @click="trigger"
+      title="显示或隐藏"
+    />
+    <div class="container" v-show="hide">
+      <!-- 进度条 -->
+      <audio src="MusicUrl"></audio>
+      <div class="block">
+        <audio ref="singeBox"></audio>
+        <el-slider
+          v-model="sliderVal"
+          :format-tooltip="formatTooltip"
+          :min="sliderMin"
+          :max="sliderMax"
+          @change="spliderSelect"
+        />
       </div>
-      <!-- 播放按钮 -->
-      <div class="playtioa">
-        <span @click="musicPlay('pre')">
-          <p class="iconfont icon-icon-3"></p>
-        </span>
-        <span @click="musicPlay('play')">
-          <p v-if="play == false" class="iconfont icon-icon-8"></p>
-          <p v-else class="iconfont icon-icon-4"></p>
-        </span>
-        <span @click="musicPlay('next')">
-          <p class="iconfont icon-icon-1"></p>
-        </span>
-      </div>
-      <!-- 歌曲时间 -->
-      <div class="time">
-        <p>{{ currentTime }}</p>
-        /
-        <p>{{ duration }}</p>
-      </div>
-      <!-- 音量 -->
-      <i class="iconfont icon-icon-2"></i>
-      <!-- 音量条 -->
-      <el-slider class="volume"></el-slider>
-      <!-- 播放顺序 -->
-      <div class="playOrder"><p class="iconfont icon-icon-6"></p></div>
-      <!-- 歌单列表 -->
-      <div class="songList">
-        <el-popover placement="top" width="28%" trigger="click">
-          <!-- 歌单展示  -->
-          <el-table :data="audio" stripe style="width: 100%" height="250">
-            <el-table-column label="" width="40" align="center" type="index" >
-            </el-table-column>
-            <el-table-column label="歌曲标题">
-              <template #default="{ row }">
-                <span>{{ row.title }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="时间" align="center">
-              <template #default="{ row }">
-                <span>{{ row.time }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="歌手">
-              <template #default="{ row }">
-                <span>{{ row.artist }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="" align="center">
-              <template #default="{ row }">
-                <span class="music-btn"
-                  ><i
-                    :class="
-                      player[row.id] && player[row.id].play
-                        ? 'iconfont icon-icon-4'
-                        : 'iconfont icon-icon-8'
-                    "
-                    @click="handlerPlay(row.id)"
-                  ></i
-                ></span>
-              </template>
-            </el-table-column>
-          </el-table>
-          <p class="iconfont icon-icon-" slot="reference"></p>
-        </el-popover>
+      <div class="playMiun">
+        <!-- 歌曲头像 -->
+        <img  v-lazy="musicImg" />
+        <div class="song">
+          <span>{{ musicTitle }}</span>
+          <p>{{ musicSinger }}</p>
+        </div>
+        <!-- 播放按钮 -->
+        <div class="playtioa">
+          <span @click="musicPlay('pre')">
+            <p class="iconfont icon-icon-3"></p>
+          </span>
+          <span @click="musicPlay('play')">
+            <p v-if="play == false" class="iconfont icon-icon-8"></p>
+            <p v-else class="iconfont icon-icon-4"></p>
+          </span>
+          <span @click="musicPlay('next')">
+            <p class="iconfont icon-icon-1"></p>
+          </span>
+        </div>
+        <!-- 歌曲时间 -->
+        <div class="time">
+          <p>{{ currentTime }}</p>
+          /
+          <p>{{ duration }}</p>
+        </div>
+        <!-- 音量 -->
+        <i class="iconfont icon-icon-2"></i>
+        <!-- 音量条 -->
+        <el-slider
+          :show-tooltip="false"
+          class="volume"
+          v-model="volume"
+          :format-tooltip="formatVolumeToolTip"
+          @change="changeVolume"
+        ></el-slider>
+        <!-- 播放顺序 -->
+        <div class="playOrder"><p class="iconfont icon-icon-6"></p></div>
+        <!-- 歌单列表 -->
+        <div class="songList">
+          <el-popover placement="top" width="28%" trigger="click">
+            <!-- 歌单展示  -->
+            <el-table :data="audio" stripe style="width: 100%" height="250">
+              <el-table-column label="" width="40" align="center" type="index">
+              </el-table-column>
+              <el-table-column label="歌曲标题">
+                <template #default="{ row }">
+                  <span>{{ row.title }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="时间" align="center">
+                <template #default="{ row }">
+                  <span>{{ row.time }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="歌手">
+                <template #default="{ row }">
+                  <span>{{ row.artist }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="" align="center">
+                <template #default="{ row }">
+                  <span class="music-btn"
+                    ><i
+                      :class="
+                        player[row.id] && player[row.id].play
+                          ? 'iconfont icon-icon-4'
+                          : 'iconfont icon-icon-8'
+                      "
+                      @click="handlerPlay(row.id)"
+                    ></i
+                  ></span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <p class="iconfont icon-icon-" slot="reference"></p>
+          </el-popover>
+        </div>
       </div>
     </div>
   </div>
@@ -110,7 +126,13 @@ export default {
       audio: [],
       musicdata: {},
       SongId: null,
-      aplayerFlag: false
+      // aplayerFlag: false,
+      // 音量
+      volume: 100,
+      // 默认隐藏播放器
+      hide: false
+      // 图片缺失时
+      // lack:'../images/为加载.jpg'
     }
   },
   created () {
@@ -138,7 +160,9 @@ export default {
       if (JSON.stringify(this.audio).indexOf(JSON.stringify(data)) == -1) {
         this.audio.push(data)
         this.init()
-        this.index += 1
+        this.musicPlay('play')
+        this.hide = true
+        // this.index += 1
         console.log(this.audio)
       }
     })
@@ -148,8 +172,8 @@ export default {
     // DisplayMusicComponent () {
     //   // 显示音乐图标
     //   setTimeout(() => {
-    //     // this.play = true
-    //   }, 100)
+    //     this.play = true
+    //   }, 1000)
     //   // 音乐组件做一次上移操作
     //   {
     //     let Aplayer = document.querySelector('.container')
@@ -239,6 +263,15 @@ export default {
       // 时长发生变动会init里的方法进行更新数据
       this.box.currentTime = this.sliderVal
     },
+    // 音量条toolTip
+    formatVolumeToolTip (index) {
+      return '音量条: ' + index
+    },
+    // 音量改变
+    changeVolume (index = 0) {
+      this.$refs.singeBox.volume = index / 100
+      this.volume = index
+    },
     // 底部歌单点击事件
     handlerPlay (id) {
       console.log(this.player)
@@ -254,28 +287,33 @@ export default {
     musicPlay (flag) {
       switch (flag) {
         case 'pre':
-          if (this.audio[this.index - 1] == 'undefined') {
-              this.musicdata = this.audio[this.index - 1]
-              this.box.src = this.musicdata.src
-              this.index -= 1
-              console.log('别输出了' + this.audio[this.index - 1])
+          if (this.audio[this.index - 1]) {
+            this.musicdata = this.audio[this.index - 1]
+            this.box.src = this.musicdata.src
+            this.index -= 1
+            console.log('别输出了' + this.audio[this.index - 1])
           } else {
             this.musicdata = this.audio[this.index]
-            console.log('没有了')
+            return this.$message.error('第一首了')
           }
           break
         case 'play':
-          this.play = !this.play
+          // 没有歌曲时页面提示
+          if (this.musicdata.src == null) {
+            this.$message.error('没有歌曲鸭')
+          } else {
+            this.play = !this.play
+          }
           // 对接控件 同步 列表里的控件
           if (this.player[this.audio[this.index].id]) {
             this.player[this.audio[this.index].id].play = this.play
-            console.log('1' + this.player[this.audio[this.index].id].play)
           }
           // 新的歌曲播放
           if (this.play && !this.player[this.audio[this.index].id]) {
+            // bug:添加歌曲后歌曲列表显示还是第一是播放标
             this.musicdata = this.audio[this.index]
+            // this.box=this.musicdata
             this.init()
-            console.log('2' + this.player[this.audio[this.index].id])
           }
           break
         case 'next':
@@ -285,7 +323,7 @@ export default {
             this.index += 1
           } else {
             this.musicdata = this.audio[this.index]
-            console.log('最后一首')
+            return this.$message.error('最后一首了')
           }
           break
       }
@@ -296,12 +334,20 @@ export default {
       } else {
         this.play ? this.box.play() : this.box.pause()
       }
+    },
+    // 点击隐藏播放器
+    trigger () {
+      this.hide = !this.hide
     }
   },
   // mounted 页面进入是完成初始化
   mounted () {
     this.init()
     this.updateTime()
+    // 销毁bus
+  },
+  beforeDestroy () {
+    this.$bus.$off('getMusicMessage')
   }
 }
 </script>
@@ -311,8 +357,19 @@ export default {
   height: auto;
   position: fixed;
   bottom: 0;
-  background-color: rgb(104, 209, 195);
+  // background-color: rgb(104, 209, 195);
   z-index: 999999;
+}
+// 触发器样式
+.trigger {
+  width: 50px;
+  height: 45px;
+  position: fixed;
+  bottom: 100px;
+  left: 30px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .block {
   /deep/ .el-slider__runway {
@@ -374,10 +431,17 @@ export default {
 .icon-icon-2 {
   padding: 0 10px;
 }
+// 音量组件
+.playMiun {
+  .el-slider:hover {
+    top: 500px;
+    color: aquamarine;
+  }
+}
 </style>
 <style>
 /* .el-popover弹出框不在app.vue中所以需要全局设置 */
-.el-popover {
-  top: 257px !important;
-}
+/* .el-popover {
+  top: 445px !important;
+} */
 </style>

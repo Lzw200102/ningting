@@ -1,20 +1,17 @@
 <template>
   <!-- 轮播图 -->
-  <div class="rim">
-    <el-carousel :height="bannerHeight + 'px'" arrow="never">
-      <el-carousel-item v-for="(item, index) in latestAlbum" :key="index">
-        <el-row type="flex" class="row-bg" justify="space-around">
-          <a :href="item.url"
-            ><img :src="item.imageUrl + '?param=661y210'" alt="" class="img" />
+  <div class="layoutBox">
+      <el-carousel :interval="4000" type="card" height="245px">
+        <el-carousel-item v-for="(item, index) in latestAlbum" :key="index">
+          <a :href="item.url">
+            <img
+               v-lazy="item.imageUrl + '?param=661y245'"
+              alt="../images/为加载.jpg"
+              class="img-row-2"
+            />
           </a>
-          <!-- 三图滚动 -->
-          <!-- <el-col :span="7" v-for="(imgs, i) in item" :key="i"
-            ><div class="grid-content bg-purple">
-              <img :src="imgs.url" class="bannerimg" /></div
-          ></el-col> -->
-        </el-row>
-      </el-carousel-item>
-    </el-carousel>
+        </el-carousel-item>
+      </el-carousel>
   </div>
 </template>
 <script>
@@ -61,7 +58,7 @@ export default {
 
 <style lang="less" scoped>
 .el-carousel {
-  height: 210px;
+  height: 270px;
   overflow: hidden;
 }
 
@@ -72,5 +69,10 @@ export default {
 }
 .img {
   border-radius: 15px;
+}
+//
+.img-row-2 {
+  height: 100%;
+  margin-right: 10px;
 }
 </style>

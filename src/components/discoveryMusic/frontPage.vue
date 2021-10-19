@@ -25,8 +25,8 @@
       </el-row>
       <!-- 歌单 -->
       <song-list></song-list>
-      <h3 class="newSong">新歌速递</h3>
       <!-- 新歌速递 -->
+      <h3 class="newSong">新歌速递</h3>
       <new-song-express></new-song-express>
     </div>
   </div>

@@ -156,7 +156,7 @@ li:hover {
   padding: 0 20px;
 }
 .classification-vice {
-  height: 145px;
+  height: 152px;
   display: flex;
   flex-direction: row;
 }
@@ -208,8 +208,6 @@ li {
   border-radius: 30px 0 0 30px;
 }
 .songlist-btn button:hover {
-  background-color: #ff4757;
-  color: white;
   cursor: pointer;
 }
 .songlist-btn button:last-child {

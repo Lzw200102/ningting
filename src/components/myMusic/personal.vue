@@ -4,22 +4,23 @@
     <div class="content">
       <!-- 左侧 -->
       <div class="avatar">
-        <img :src="backgroundUrl" alt="" />
+        <img  v-lazy="backgroundUrl" alt="" />
         <div class="user">
-          <img :src="avatarUrl" alt="" />
+          <img  v-lazy="avatarUrl" alt="" />
           <p class="nickname">{{ nickname }}</p>
           <el-button size="mini" round>修改信息</el-button>
         </div>
         <ul>
-          <li><div class="el-icon-bottom-right">等级:</div></li>
-          <li><div class="el-icon-bottom-right">年龄:</div></li>
-          <li><div class="el-icon-bottom-right">地区:</div></li>
-          <li><div class="el-icon-bottom-right">签名:</div></li>
+          <li><div class="el-icon-bottom-right">等级:0</div></li>
+          <li><div class="el-icon-bottom-right">地区:保密</div></li>
+          <li>
+            <div class="el-icon-bottom-right">个人介绍:{{ signature }}</div>
+          </li>
         </ul>
         <div class="personalRecord">
-          <div>动态 10</div>
-          <div>关注 10</div>
-          <div>粉丝 10</div>
+          <div>动态 {{ fan }}</div>
+          <div>关注 {{ focusOn }}</div>
+          <div>粉丝 {{ dynamic }}</div>
         </div>
       </div>
       <!-- 中间 -->
@@ -42,63 +43,7 @@
             >
           </div>
         </div>
-        <div class="duration">
-          <el-row :gutter="0">
-            <el-col :span="3"
-              ><div class="grid-content bg-purple">
-                <p class="p1">序号</p>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div class="grid-content bg-purple">
-                <p>歌曲</p>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div class="grid-content bg-purple"><p>歌手</p></div></el-col
-            >
-            <el-col :span="5"
-              ><div class="grid-content bg-purple"><p>专辑</p></div></el-col
-            >
-            <el-col :span="2"
-              ><div class="grid-content bg-purple"><p>时长</p></div></el-col
-            >
-          </el-row>
-        </div>
-        <div class="play">
-          <el-row :gutter="0" v-for="(v, i) of allData" :key="i">
-            <el-col :span="3">
-              <div class="grid-content bg-purple">
-                <p class="p1">{{ i + 1 }}</p>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div class="grid-content bg-purple special">
-                <img :src="v.song.al.picUrl" alt="" class="imgSong" />
-                <p class="songName">{{ v.song.name }}</p>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div
-                class="grid-content bg-purple"
-                v-for="(v2, i2) of v.song.ar"
-                :key="i2"
-              >
-                <p>{{ v2.name }}</p>
-              </div></el-col
-            >
-            <el-col :span="6"
-              ><div class="grid-content bg-purple">
-                <p class="theAlbumName">《{{ v.song.al.name }}》</p>
-              </div></el-col
-            >
-            <el-col :span="2"
-              ><div class="grid-content bg-purple">
-                <p>{{ v.song.dt | GetTime() }}</p>
-              </div></el-col
-            >
-          </el-row>
-        </div>
+        <listsong :SongData="allData"></listsong>
       </div>
       <!-- 右侧 -->
       <div class="songList">
@@ -122,13 +67,13 @@
         <!-- 歌单 -->
         <div class="songShow" v-if="currentButtonItim === 1">
           <div class="Show" v-for="(v, i) in songListCollection[0]" :key="i">
-            <img :src="v.coverImgUrl" alt="" />
+            <img  v-lazy="v.coverImgUrl" alt="" />
             <p>{{ v.name }}</p>
           </div>
         </div>
         <div class="songShow" v-if="currentButtonItim === 2">
           <div class="Show" v-for="(v, i) in songListCollection[1]" :key="i">
-            <img :src="v.coverImgUrl" alt="" />
+            <img  v-lazy="v.coverImgUrl" alt="" />
             <p>{{ v.name }}</p>
           </div>
         </div>
@@ -137,9 +82,13 @@
   </div>
 </template>
 <script>
+import listsong from '../publicAssembly/listsong.vue'
 // 格式化时间
-import { filtrationTime } from '../images/js/SongTime'
+import { filtrationTime } from '../utils/SongTime'
 export default {
+  components: {
+    listsong
+  },
   data () {
     return {
       currentItim: 0,
@@ -150,6 +99,14 @@ export default {
       nickname: '',
       // 用户头像
       avatarUrl: '',
+      // 用户签名
+      signature: '',
+      // 关注
+      focusOn: '',
+      // 粉丝
+      fan: '',
+      // 动态
+      dynamic: '',
       // 背景图
       backgroundUrl: '',
       // 选择是否是最近一周还是所有
@@ -159,7 +116,10 @@ export default {
       allData: '',
 
       // 歌单集合
-      songListCollection: ''
+      songListCollection: '',
+      // 省份、城市
+      province: '',
+      city: ''
     }
   },
   // 监听选择是否是最近一周还是所有
@@ -177,16 +137,31 @@ export default {
     // 获取个人信息
     async getpersonalInformation () {
       const result = await this.$http.get('/user/playlist?uid=' + this.UserId)
+      // 关注
+      const result2 = await this.$http.get('/user/follows?uid=' + this.UserId)
+      // 粉丝
+      const result3 = await this.$http.get('/user/followeds?uid=' + this.UserId)
+      // 动态
+      const result4 = await this.$http.get('/user/event?uid=' + this.UserId)
+      // 等级
+      // const result5 = await this.$http.get('/user/level?uid='+ this.UserId)
       if (result.data.code !== 200) {
         return this.$message.error('获取用户信息失败！')
       } else {
         this.nickname = result.data.playlist[0].creator.nickname
         this.avatarUrl = result.data.playlist[0].creator.avatarUrl
         this.backgroundUrl = result.data.playlist[0].creator.backgroundUrl
+        this.signature = result.data.playlist[0].creator.signature
+        this.province = result.data.playlist[0].creator.province
+        this.city = result.data.playlist[0].creator.city
         // 获取用户歌单
         this.songListCollection = this.FilterData(result.data.playlist)
-        console.log(this.songListCollection)
+        // console.log(this.city)
       }
+      this.focusOn = result2.data.follow.length
+      this.fan = result3.data.followeds.length
+      this.dynamic = result4.data.events.length
+      // console.log(this.result5);
     },
     // 获取用户播放记录
     async getlistenToTheHistoryHistory () {
@@ -198,6 +173,19 @@ export default {
       } else {
         this.allData = result.data.allData
       }
+    },
+    // 获取用户地址
+    async getuserAddress () {
+      console.log(this.province)
+      const result = await this.$http.get(
+        '/user/update?province=' + 420000 + '&city=' + 429004
+      )
+      // if (result.data.code !== 200) {
+      //   return this.$message.error('获取用户信息失败！')
+      // } else {
+      //   console.log(result + '///')
+      // }
+      console.log(result + '///')
     },
     // 判读歌单是自建还是收藏
     FilterData (arr) {
@@ -221,10 +209,10 @@ export default {
       this.currentButtonItim = index
     }
   },
-
   mounted () {
     this.getpersonalInformation()
     this.getlistenToTheHistoryHistory()
+    // this.getuserAddress()
   }
 }
 </script>
@@ -304,9 +292,6 @@ export default {
       div .p1 {
         text-align: center;
       }
-      .songName {
-        font-size: 12px;
-      }
     }
     .play {
       margin: 0 10px;
@@ -334,9 +319,20 @@ export default {
             height: 30px;
             border-radius: 5px;
           }
+          .songName {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
         }
       }
     }
+  }
+  .singer {
+    font-size: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .songList {
     width: 250px;

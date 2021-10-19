@@ -48,7 +48,6 @@ export default {
       // 点击添加字体颜色，其他的删除class名称
       this.dynamic = index
       Bus.$emit('goBorther', videoStyle)
-      console.log(index)
     },
     getMoney2 (index2, videoStyle) {
       // 点击添加字体颜色，其他的删除class名称
@@ -57,10 +56,6 @@ export default {
       Bus.$emit('goBorther2', videoStyle)
     }
   },
-  beforeCreate () {
-    this.getMoney()
-    this.getMoney2()
-  }
 }
 </script>
 <style scoped>

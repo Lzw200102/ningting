@@ -8,6 +8,7 @@
     <player></player>
     <!-- 通过v-if来控制容器的出现与消失 -->
     <router-view v-if="isRouterAlive" />
+    
   </div>
 </template>
 
@@ -88,4 +89,13 @@ img {
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(255, 0, 0, 0.4);
 }
+/* 懒加载 加载中图片样式 */
+img[lazy="loading"]{
+  display:block;
+  width:50px !important;
+  height:50px !important;
+  margin:0 auto;
+  }
+  /* iocn图标 */
+  
 </style>

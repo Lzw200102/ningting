@@ -4,7 +4,7 @@
     <!-- 排行榜 -->
     <leaderboard-details></leaderboard-details>
     <!-- 回到顶部 -->
-    <back-to-the-top></back-to-the-top>
+    <backtothe-top></backtothe-top>
     <router-view />
   </div>
 </template>

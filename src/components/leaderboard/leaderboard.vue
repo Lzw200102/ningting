@@ -11,7 +11,7 @@
           @click="gotolistdetails(v.id, v.playCount)"
         >
           <div class="list-img">
-            <img :src="v.coverImgUrl + '?param=150y150'" alt="" />
+            <img  v-lazy="v.coverImgUrl + '?param=150y150'" alt="" />
           </div>
           <div class="list-title">
             <h4>{{ v.name }}</h4>
@@ -25,7 +25,7 @@
           @click="gotolistdetails(v2.id, v2.playCount)"
         >
           <div class="list-img">
-            <img :src="v2.coverImgUrl + '?param=150y150'" alt="" />
+            <img  v-lazy="v2.coverImgUrl + '?param=150y150'" alt="" />
           </div>
           <div class="list-title">
             <h4>{{ v2.name }}</h4>

@@ -17,11 +17,21 @@ import store from './store/index'
 // 挂载到$message上
 Vue.prototype.$message = Message
 Vue.use(ElementUI, { locale })
+// 配置项Vue-Lazyload
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+  preLoad: 3,
+  error: '../src/components/images/error.jpg',
+  loading:'../src/components/images/loading.gif',
+  attempt: 1
+})
+// 错误提示
 Vue.config.productionTip = false
 // 配置请求的跟路径
-axios.defaults.baseURL = 'http://localhost:3000/'
+axios.defaults.baseURL = 'http://cloud-music.pl-fe.cn/'
 // 跨域优化
-// axios.defaults.headers.get['Content-Type'] = 'text/html '
+// axios.defaults.headers.get['Content-Type'] = 'text/html'
 // 全局配置  挂载到vue的原型对象上  这样每个vue组件都可以通过this.$http 使用axios
 Vue.prototype.$http = axios
 // 注册事件总线

@@ -33,6 +33,7 @@
           closable
           :type="search.type"
           @close="closeHandler(search)"
+          @click="historicalSearch(search.name)"
           style="margin-right:5px; margin-bottom:5px;"
           >{{ search.name }}</el-tag
         >
@@ -42,9 +43,19 @@
       <!-- 当搜索框有值时直接显示搜索 -->
       <dl v-if="isSearchList">
         <dt class="search-title">歌曲</dt>
-        <dd v-for="singer in searchVal" :key="singer.id">{{ singer.name }}</dd>
+        <dd
+          v-for="singer in searchVal"
+          :key="singer.id"
+          @click="getsong(singer.id)"
+        >
+          {{ singer.name }}
+        </dd>
         <dt class="search-title">歌手</dt>
-        <dd v-for="songs in searchValSinger" :key="songs.id">
+        <dd
+          v-for="songs in searchValSinger"
+          :key="songs.id"
+          @click="getsinger(songs.id)"
+        >
           {{ songs.name }}
         </dd>
         <dt class="search-title">专辑</dt>
@@ -54,12 +65,13 @@
       </dl>
     </el-card>
   </div>
+  
 </template>
 <script>
 // 静态方法，获得随机数
-import randomUtil from '../images/js/randomUtil.js'
+import randomUtil from '../utils/randomUtil.js'
 // 本地localStorage存储搜索记录
-import store from '../images/js/store.js'
+import store from '../utils/store.js'
 export default {
   data () {
     return {
@@ -105,7 +117,6 @@ export default {
     },
     // 去搜索详情（发送歌曲）   搜索接口 /search?keywords=
     async GotoSearchDetails (search) {
-      //
       const result = await this.$http.get(
         '/search?keywords=' + search + '&type=1&limit=5'
       )
@@ -115,33 +126,32 @@ export default {
       //  将歌曲数据传给子组件
       this.searchVal = result.data.result.songs
     },
-    // 去搜索详情（发送专辑）   搜索接口 /search?keywords=
-    async GotoSearchAlbum (search) {
-      //
-      const result = await this.$http.get(
-        '/search?keywords=' + search + '&type=10&limit=3'
-      )
-      if (result.status !== 200) {
-        return this.$message.error('获取搜索歌手失败！')
-      }
-      this.searchValAlbums = result.data.result.albums
-    },
     // 去搜索详情（发送歌手）   搜索接口 /search?keywords=
     async GotoSearchSinger (search) {
-      //
       const result = await this.$http.get(
         '/search?keywords=' + search + '&type=100&limit=1'
       )
       if (result.status !== 200) {
         return this.$message.error('获取搜索歌手失败！')
       }
-      console.log('歌手')
-      // console.log(result.data);
       //  将歌手数据传给子组件
       this.searchValSinger = result.data.result.artists
-      console.log(this.searchValSinger) // 在需要传值的方法中处理
     },
-
+    // 去搜索详情（发送专辑）   搜索接口 /search?keywords=
+    async GotoSearchAlbum (search) {
+      const result = await this.$http.get(
+        '/cloudsearch?keywords=' + search + '&type=10&limit=3'
+      )
+      if (result.status !== 200) {
+        return this.$message.error('获取搜索专辑失败！')
+      }
+      this.searchValAlbums = result.data.result.albums
+      console.log(this.searchValAlbums + '专辑')
+    },
+    // 点击搜索历史传给搜索栏
+    historicalSearch (name) {
+      this.search = name
+    },
     // 搜索框方法
     focus () {
       this.isFocus = true
@@ -158,6 +168,7 @@ export default {
     enterSearchBoxHanlder () {
       clearTimeout(this.searchBoxTimeout)
     },
+    // 回车、搜索触发搜索事件（默认歌手）
     searchHandler () {
       // 随机生成搜索历史tag式样
       let n = randomUtil.getRandomNumber(0, 5)
@@ -170,7 +181,10 @@ export default {
         store.saveHistory(this.historySearchList)
       }
       this.history = this.historySearchList.length !== 0
+      // 默认搜索歌手
+      this.getsinger(this.searchValSinger.id)
     },
+    // 删除对应的记录
     closeHandler (search) {
       this.historySearchList.splice(this.historySearchList.indexOf(search), 1)
       store.saveHistory(this.historySearchList)
@@ -182,9 +196,32 @@ export default {
     },
     removeAllHistory () {
       store.removeAllHistory()
+    },
+    // 歌曲
+    getsong (id) {
+      // 路由跳转到歌曲详情并携带相关参数
+      this.$router.push({
+        name: 'SongDetails',
+        query: { id: id }
+      })
+      console.log(id)
+    },
+    // 歌手
+    getsinger (id) {
+      // 跳转到歌手详情
+      this.$router.push('/singer/' + id)
+    },
+    // 歌单
+    getalbum (id) {
+      // 去歌单详情
+      this.$router.push({
+        name: 'songListDetails',
+        query: {
+          id: id
+        }
+      })
     }
-  },
-  mounted () {}
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -205,6 +242,9 @@ export default {
   font-size: 15px;
   float: right;
   margin-top: -22px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 #search-box {
   width: 555px;

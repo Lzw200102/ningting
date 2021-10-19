@@ -18,7 +18,7 @@
                     :key="i"
                     @click="slideListOne = !slideListOne"
                   >
-                    <img :src="v.url" alt="" />
+                    <img  v-lazy="v.url" alt="" />
                     <p>
                       {{ v.name }}
                     </p>
@@ -31,7 +31,7 @@
                     :key="i"
                     @click="slideListTow = !slideListTow"
                   >
-                    <img :src="v.url" alt="" />
+                    <img  v-lazy="v.url" alt="" />
                     <p>
                       {{ v.name }}
                     </p>

@@ -10,7 +10,7 @@
           <el-row>
             <el-col :span="5"
               ><div class="grid-content bg-purple">
-                <img class="ranking-list-img" :src="rankingPic" alt="" /></div
+                <img class="ranking-list-img"  v-lazy="rankingPic" alt="" /></div
             ></el-col>
             <el-col :span="19"
               ><div class="grid-content bg-purple-light">
@@ -74,45 +74,47 @@
           </el-row>
           <ul>
             <li v-for="(song, indexsong) in Songcontent" :key="indexsong">
-              <el-row :gutter="20" class="ranking-list-row">
-                <el-col :span="4"
-                  ><div class="grid-content bg-purple">
-                    {{ indexsong + 1 }}
-                  </div></el-col
-                >
-                <el-col :span="10"
-                  ><div class="grid-content bg-purple" style="float:left;">
-                    <div class="list-songName">
-                      <img
-                        :src="song.al.picUrl"
-                        alt=""
-                        style="height: 45px;width: 45px;border-radius: 10px;"
-                      />
-                      <div
-                        class="el-icon-video-play"
-                        style="font-size:20px;margin:0 20px"
-                      ></div>
-                      <div>
-                        <span>{{ song.name }}</span>
-                      </div>
-                    </div>
-                  </div></el-col
-                >
-                <el-col :span="4"
-                  ><div class="grid-content bg-purple">
-                    {{ song.dt | GetTime() }}
-                  </div></el-col
-                >
-                <el-col :span="6"
-                  ><div
-                    class="grid-content bg-purple"
-                    style="float:left;"
-                    v-for="(v, i) in song.ar"
-                    :key="i"
+              <el-row :gutter="20" class="ranking-list-row play-click">
+                <div @click="playMusic(song.id)">
+                  <el-col :span="4"
+                    ><div class="grid-content bg-purple">
+                      {{ indexsong + 1 }}
+                    </div></el-col
                   >
-                    {{ v.name }}
-                  </div></el-col
-                >
+                  <el-col :span="10"
+                    ><div class="grid-content bg-purple" style="float:left;">
+                      <div class="list-songName">
+                        <img
+                           v-lazy="song.al.picUrl"
+                          alt=""
+                          style="height: 45px;width: 45px;border-radius: 10px;"
+                        />
+                        <div
+                          class="el-icon-video-play"
+                          style="font-size:20px;margin:0 20px"
+                        ></div>
+                        <div>
+                          <span>{{ song.name }}</span>
+                        </div>
+                      </div>
+                    </div></el-col
+                  >
+                  <el-col :span="4"
+                    ><div class="grid-content bg-purple">
+                      {{ song.dt | GetTime() }}
+                    </div></el-col
+                  >
+                  <el-col :span="6"
+                    ><div
+                      class="grid-content bg-purple"
+                      style="float:left;"
+                      v-for="(v, i) in song.ar"
+                      :key="i"
+                    >
+                      {{ v.name }}
+                    </div></el-col
+                  >
+                </div>
               </el-row>
             </li>
           </ul>
@@ -125,7 +127,9 @@
 <script>
 import leaderboard from '../leaderboard/leaderboard.vue'
 // 格式化时间
-import { GetCommonTime, filtrationTime } from '../images/js/SongTime'
+import { GetCommonTime, filtrationTime } from '../utils/SongTime'
+// 播放音乐的js
+import { playMisic } from '../plugins/PlayMisic.js'
 export default {
   components: {
     leaderboard
@@ -260,15 +264,21 @@ export default {
     },
 
     // 播放歌曲
-    // playMisic (id) {
-    //   playMisic(id).then(musicdata => {
-    //     this.$bus.$emit('getMusicMessage', musicdata)
-    //     this.$router.push({
-    //       name: 'SongDetails',
-    //       query: { id: id, data: musicdata }
-    //     })
-    //   })
-    // },
+    playMusic (id) {
+      playMisic(id).then(musicdata => {
+        // 通过事件总线发送事件并传入数据 -> 歌曲数据和歌曲id
+        this.$bus.$emit('getMusicMessage', { musicdata, id })
+        let newsData = {
+          picUrl: musicdata.picUrl,
+          Singer: musicdata.Singer,
+          picname: musicdata.picname
+        }
+        // 将当前播放的音乐数据传给vuex进行管理
+        this.$store.commit('setMusicData', newsData)
+        // 跳转到评论区
+        this.$router.push({ name: 'SongDetails', query: { id: id } })
+      })
+    },
 
     // 获取相关歌单  likeness
     async getSongLikeness () {
@@ -295,6 +305,9 @@ export default {
 </script>
 <style lang="less" scoped>
 /* 排行榜样式以乱 */
+.play-click:hover {
+  cursor: pointer;
+}
 .el-container {
   width: 1260px;
   padding: 25px 0 85px;

@@ -19,23 +19,24 @@
             background-color="#545c64"
             text-color="#fff"
             active-text-color="rgb(104, 209, 195)"
+            router
           >
-            <el-menu-item index="1">
+            <el-menu-item index="/">
               <router-link to="/">发现音乐</router-link></el-menu-item
             >
-            <el-menu-item index="2">
+            <el-menu-item index="/page2">
               <router-link to="/page2">排行榜</router-link></el-menu-item
             >
-            <el-menu-item index="3">
+            <el-menu-item index="/page3">
               <router-link to="/page3">歌单</router-link></el-menu-item
             >
-            <el-menu-item index="4">
+            <el-menu-item index="/page4">
               <router-link to="/page4">视频</router-link></el-menu-item
             >
-            <el-menu-item index="5">
+            <el-menu-item index="/page5">
               <router-link to="/page5">歌手</router-link></el-menu-item
             >
-            <el-menu-item index="6">
+            <el-menu-item index="/page6">
               <router-link to="/page6">我的音乐</router-link></el-menu-item
             >
           </el-menu>
@@ -52,6 +53,7 @@
         </el-col>
       </el-row>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 

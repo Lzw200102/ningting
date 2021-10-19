@@ -1,5 +1,5 @@
 <template>
-  <!-- 歌单-全部歌单 -->
+  <!-- 全部歌单 -->
   <div class="content">
     <el-row type="flex" class="row-bg" justify="space-between">
       <el-col :span="6">
@@ -7,8 +7,9 @@
           class="grid-content bg-purple"
           v-for="(v, i) in SongListData"
           :key="i"
+          @click="songListDetails(v.id)"
         >
-          <img :src="v.coverImgUrl" alt="" class="imgs" />
+          <img  v-lazy="v.coverImgUrl" alt="" class="imgs" />
           <h6>{{ v.name }}</h6>
           <span>{{ v.creator.nickname }}</span>
         </div></el-col
@@ -29,7 +30,17 @@ export default {
     return {}
   },
 
-  methods: {}
+  methods: {
+    // 去歌单详情
+    songListDetails (id) {
+      this.$router.push({
+        name: 'songListDetails',
+        query: {
+          id: id
+        }
+      })
+    }
+  }
 }
 </script>
 <style scoped>
@@ -42,6 +53,9 @@ export default {
 .bg-purple {
   width: 20%;
   margin-bottom: 10px;
+}
+.bg-purple:hover {
+  cursor: pointer;
 }
 .bg-purple img {
   width: 230px;

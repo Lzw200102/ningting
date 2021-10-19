@@ -10,7 +10,7 @@
       ></div>
       <!-- 歌曲图片、歌名、歌手 -->
       <div class="song">
-        <img :src="item.picUrl + '?param=45y45'" alt="" />
+        <img v-lazy="item.picUrl + '?param=45y45'" alt="" />
         <div class="writing">
           <p class="writing-p">{{ item.name }}</p>
           <p>{{ item.song.artists[0].name }}</p>
@@ -28,7 +28,7 @@ import { GetLatestSong, GetGotSinger } from '../plugins/frontPage.js'
 // 播放音乐的js
 import { playMisic } from '../plugins/PlayMisic.js'
 // 格式化时间
-import { filtrationTime } from '../images/js/SongTime'
+import { filtrationTime } from '../utils/SongTime'
 export default {
   data () {
     return {
@@ -76,10 +76,10 @@ export default {
         // 将当前播放的音乐数据传给vuex进行管理
         this.$store.commit('setMusicData', newsData)
         // 路由跳转到歌曲详情并携带相关参数
-        // this.$router.push({
-        //   name: 'SongDetails',
-        //   query: { id: id, data: newsData }
-        // })
+        this.$router.push({
+          name: 'SongDetails',
+          query: { id: id, data: newsData }
+        })
       })
     },
     // 热门歌手

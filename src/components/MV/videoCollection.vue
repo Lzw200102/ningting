@@ -1,10 +1,15 @@
 <template>
-  <!-- 视频歌单 -->
+  <!-- 视频展示 -->
   <div class="content">
     <el-row type="flex" class="row-bg" justify="space-between">
       <el-col :span="6">
-        <div v-for="(v, i) in artists" :key="i" class="infinite-list-item">
-          <img :src="v.cover" alt="" class="imgs" />
+        <div
+          v-for="(v, i) in artists"
+          :key="i"
+          class="infinite-list-item"
+          @click="gotolikeness(v.id)"
+        >
+          <img  v-lazy="v.cover" alt="" class="imgs" />
           <h6>{{ v.name }}</h6>
           <span>{{ v.artistName }}</span>
         </div>
@@ -37,7 +42,6 @@ export default {
       this.timer()
     }
   },
-
   data () {
     return {
       // 默认数据
@@ -52,6 +56,7 @@ export default {
     }
   },
   methods: {
+    // 获取MV
     async getSingerlist () {
       const result = await this.$http.get(
         '/mv/all?area=' +
@@ -80,6 +85,16 @@ export default {
     // 用于解决当前页码不能手动刷新的问题
     autoIncrasePageComKey () {
       this.elementui_page_component_key++
+    },
+    // 点击相关推荐
+    // 点击相关推荐
+    gotolikeness (id) {
+      this.$router.push({
+        name: 'MVList',
+        query: {
+          id: id
+        }
+      })
     }
   },
   mounted () {
@@ -104,7 +119,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.content{
+.content {
   margin-bottom: 130px;
 }
 .el-col {
@@ -132,5 +147,9 @@ export default {
   right: 50%;
   transform: translateX(50%);
   padding: 10px 0;
+}
+.row-bg,
+el-col:hover {
+  cursor: pointer;
 }
 </style>

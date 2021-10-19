@@ -5,6 +5,7 @@ import {
   getSessionStorageItem
 } from '../Storage/storage'
 
+const USERDATA = 'USERDATA' 
 const MUSICDATA = 'MUSICDATA' // 当前播放的歌曲数据（封面，标题，歌手名称）
 const USERID = 'USERID'
 const USERTOKEN = 'USERTOKEN'
@@ -14,6 +15,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   // 包含了store中存储的各个状态
   state: {
+    // 用户名和用户头像
+    userdata:getSessionStorageItem(USERDATA),
     // 播放的歌曲信息
     musicData: getSessionStorageItem(MUSICDATA),
     // 登录id,令牌，cookie
@@ -23,6 +26,10 @@ const store = new Vuex.Store({
   },
   // 同步用mutations,是改变store中状态的执行者，只能是同步操作。
   mutations: {
+    setUserdata (state, data) {
+      state.userdata = data // 保存userToken
+      setSessionStorageItem(USERDATA, data) // 调用函数用sessionStorage将userToken持久化
+    },
     // 保存子组件传来的音乐数据
     setMusicData (state, data) {
       state.musicData = data // 保存userToken

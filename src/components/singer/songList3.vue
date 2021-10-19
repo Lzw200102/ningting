@@ -8,8 +8,9 @@
             class="grid-content bg-purple"
             v-for="(v, i) of dataShow"
             :key="i"
+            @click="getSingerId(v.id)"
           >
-            <img :src="v.img1v1Url" alt="" class="imgs" />
+            <img  v-lazy="v.img1v1Url" alt="" class="imgs" />
             <h3>{{ v.name }}</h3>
           </div></el-col
         >
@@ -91,6 +92,10 @@ export default {
     // 用于解决当前页码不能手动刷新的问题
     autoIncrasePageComKey () {
       this.elementui_page_component_key++
+    },
+    // 跳转到歌手详情
+    getSingerId (id) {
+      this.$router.push('/singer/'+id)
     }
   },
   mounted () {

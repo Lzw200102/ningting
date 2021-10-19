@@ -106,11 +106,11 @@ export default {
       Bus.$emit('gosingerList3', item)
     }
   },
-  beforeCreate () {
-    this.getMoney()
-    this.getMoney2()
-    this.getMoney3()
-  }
+  // beforeCreate () {
+  //   this.getMoney()
+  //   this.getMoney2()
+  //   this.getMoney3()
+  // }
 }
 </script>
 <style scoped>

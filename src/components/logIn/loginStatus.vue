@@ -16,7 +16,7 @@
       <!-- 登录后的下拉选项 -->
       <el-dropdown @command="handleCommand" v-if="dialogFlag">
         <span class="el-dropdown-link">
-          <img :src="avatarUrls" alt="" />
+          <img  v-lazy="avatarUrls" alt="" />
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="a">{{ nickname }}</el-dropdown-item>
@@ -70,6 +70,12 @@ export default {
         this.avatarUrls = result.data.profile.avatarUrl
         // 保存用户名称
         this.nickname = result.data.profile.nickname
+        let getdataList = {
+          avatarUrls: this.avatarUrls,
+          nickname: this.nickname
+        }
+        // 将当前播放的音乐数据传给vuex进行管理
+        this.$store.commit('setUserdata', getdataList)
       }
     },
     // 根据token值判断当前页面是否登录了，如果登录则显示头像 隐藏'登录‘
