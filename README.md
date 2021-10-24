@@ -1,27 +1,35 @@
-# data3
+## 后端项目地址 
 
-> A Vue.js project
+[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
-## Build Setup
+## 线上项目地址 
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
+[vue_project_music 仿网易云音乐网站](http://lingting.9ps.space/)
+## 安装运行
 ```
+$后端
+$ git clone https://github.com/Binaryify/NeteaseCloudMusicApi
+$ cd NeteaseCloudMusicApi
+$ npm install
+$ npm start
+$ 成功后访问localhost:3000是否正常，正常下一步
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+$前端
+$ git clone https://gitee.com/liu-ziwang/vue-imitation-netease-cloud.git
+$ cd vue-net-ease-cloud-music
+$ npm install
+$ npm run dev
+
+**技术栈**
+
+- vue 
+  -  条件循环、条件判断、组件插槽、传参、事件总线等
+- vue-cli 
+  -  生成脚手架 
+- vue-router  
+  - 路由传参、路由守卫等
+- axios  
+  -  发起ajax网络请求 
+- element-ui 
+  - 登录验证、各种ui组件、比如分页、加载、输入框、轮播图等等
+```
