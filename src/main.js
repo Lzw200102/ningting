@@ -1,8 +1,13 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
-import router from './router'
+
+// 导入axios
+import axios from 'axios'
+// 引入vuex中的store
+import store from './store/index'
+// 配置项Vue-Lazyload
+import VueLazyload from 'vue-lazyload'
 // 引入阿里图片iocn
 import './assets/iocn/iconfont.css'
 // 引入element// 导入message
@@ -10,20 +15,19 @@ import ElementUI, { Message } from 'element-ui'
 // 引入elementUI
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/zh-CN'
-// 导入axios
-import axios from 'axios'
-// 引入vuex中的store
-import store from './store/index'
+import router from './router'
+
+import App from './App'
+
 // 挂载到$message上
 Vue.prototype.$message = Message
 Vue.use(ElementUI, { locale })
-// 配置项Vue-Lazyload
-import VueLazyload from 'vue-lazyload'
+
 Vue.use(VueLazyload)
 Vue.use(VueLazyload, {
-  preLoad: 3,
+  preLoad: 2,
   error: '../src/components/images/error.jpg',
-  loading:'../src/components/images/loading.gif',
+  loading: require('../src/components/images/error.jpg'),
   attempt: 1
 })
 // 错误提示

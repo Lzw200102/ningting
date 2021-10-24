@@ -8,7 +8,6 @@
     <player></player>
     <!-- 通过v-if来控制容器的出现与消失 -->
     <router-view v-if="isRouterAlive" />
-    
   </div>
 </template>
 
@@ -52,6 +51,17 @@ export default {
 /* 全局样式 */
 body {
   margin: 0 !important;
+  background: #e6dada; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #274046,
+    #e6dada
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #274046,
+    #e6dada
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 * {
   margin: 0;
@@ -73,7 +83,7 @@ img {
 /* 滚动条 */
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 2px;
 }
 /* 滚动槽 */
 ::-webkit-scrollbar-track {
@@ -90,12 +100,11 @@ img {
   background: rgba(255, 0, 0, 0.4);
 }
 /* 懒加载 加载中图片样式 */
-img[lazy="loading"]{
+/* img[lazy="loading"]{
   display:block;
   width:50px !important;
   height:50px !important;
   margin:0 auto;
-  }
-  /* iocn图标 */
-  
+  } */
+/* iocn图标 */
 </style>

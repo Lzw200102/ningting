@@ -4,9 +4,9 @@
     <div class="content">
       <!-- 左侧 -->
       <div class="avatar">
-        <img  v-lazy="backgroundUrl" alt="" />
+        <img v-lazy="backgroundUrl" alt="" />
         <div class="user">
-          <img  v-lazy="avatarUrl" alt="" />
+          <img v-lazy="avatarUrl" alt="" />
           <p class="nickname">{{ nickname }}</p>
           <el-button size="mini" round>修改信息</el-button>
         </div>
@@ -65,15 +65,16 @@
           </button>
         </div>
         <!-- 歌单 -->
+
         <div class="songShow" v-if="currentButtonItim === 1">
           <div class="Show" v-for="(v, i) in songListCollection[0]" :key="i">
-            <img  v-lazy="v.coverImgUrl" alt="" />
+            <img v-lazy="v.coverImgUrl" alt="" />
             <p>{{ v.name }}</p>
           </div>
         </div>
         <div class="songShow" v-if="currentButtonItim === 2">
           <div class="Show" v-for="(v, i) in songListCollection[1]" :key="i">
-            <img  v-lazy="v.coverImgUrl" alt="" />
+            <img v-lazy="v.coverImgUrl" alt="" />
             <p>{{ v.name }}</p>
           </div>
         </div>
@@ -180,12 +181,11 @@ export default {
       const result = await this.$http.get(
         '/user/update?province=' + 420000 + '&city=' + 429004
       )
-      // if (result.data.code !== 200) {
-      //   return this.$message.error('获取用户信息失败！')
-      // } else {
-      //   console.log(result + '///')
-      // }
-      console.log(result + '///')
+      if (result.data.code !== 200) {
+        return this.$message.error('获取用户信息失败！')
+      } else {
+        console.log(result)
+      }
     },
     // 判读歌单是自建还是收藏
     FilterData (arr) {
@@ -271,6 +271,7 @@ export default {
     padding-top: 10px;
     margin: 0 10px;
     box-shadow: 2px 4px 7px #888888;
+
     .title {
       padding: 0 10px;
       display: flex;
@@ -294,9 +295,11 @@ export default {
       }
     }
     .play {
+      width: 730px;
+      height: 490px !important;
       margin: 0 10px;
       line-height: 30px;
-
+      overflow: auto !important;
       .el-row {
         height: 40px;
         background-color: antiquewhite;
@@ -335,7 +338,7 @@ export default {
     white-space: nowrap;
   }
   .songList {
-    width: 250px;
+    width: 260px;
     box-shadow: 2px 4px 7px #888888;
     .songlist-btn {
       width: 140px;
@@ -359,11 +362,14 @@ export default {
       }
     }
     .songShow {
+      height: 533px;
+      width: 261px;
       border-top: 2px solid beige;
       display: flex;
       flex-direction: row;
       // justify-content: space-around;
       flex-wrap: wrap;
+      overflow: auto;
       .Show {
         width: 125px;
         height: 133px;
@@ -371,6 +377,7 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
         &:hover {
           cursor: pointer;
         }

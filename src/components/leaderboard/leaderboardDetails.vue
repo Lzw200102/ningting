@@ -75,14 +75,14 @@
           <ul>
             <li v-for="(song, indexsong) in Songcontent" :key="indexsong">
               <el-row :gutter="20" class="ranking-list-row play-click">
-                <div @click="playMusic(song.id)">
-                  <el-col :span="4"
-                    ><div class="grid-content bg-purple">
+                <div>
+                  <el-col :span="4"  
+                    ><div class="grid-content bg-purple" @click="playMusic(song.id)">
                       {{ indexsong + 1 }}
                     </div></el-col
                   >
-                  <el-col :span="10"
-                    ><div class="grid-content bg-purple" style="float:left;">
+                  <el-col :span="10" 
+                    ><div class="grid-content bg-purple" style="float:left;" @click="songDetails(song.id)">
                       <div class="list-songName">
                         <img
                            v-lazy="song.al.picUrl"
@@ -275,11 +275,17 @@ export default {
         }
         // 将当前播放的音乐数据传给vuex进行管理
         this.$store.commit('setMusicData', newsData)
-        // 跳转到评论区
-        this.$router.push({ name: 'SongDetails', query: { id: id } })
+        
       })
     },
-
+    // 去歌曲详情
+    songDetails (id) {
+      // 路由跳转到歌曲详情并携带相关参数
+      this.$router.push({
+        name: 'SongDetails',
+        query: { id: id}
+      })
+    },
     // 获取相关歌单  likeness
     async getSongLikeness () {
       const result = await this.$http.get(

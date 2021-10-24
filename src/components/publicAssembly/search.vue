@@ -38,12 +38,20 @@
           >{{ search.name }}</el-tag
         >
         <dt class="search-title">热门搜索</dt>
-        <dd v-for="search in hotSearchList" :key="search.id">{{ search }}</dd>
+        <dd v-for="(search, i) in hotSearchList" :key="i">
+          <div
+            class="popularRecommendation"
+            @click="popularRecommendation(search.first)"
+          >
+            {{ search.first }}
+          </div>
+        </dd>
       </dl>
       <!-- 当搜索框有值时直接显示搜索 -->
       <dl v-if="isSearchList">
         <dt class="search-title">歌曲</dt>
         <dd
+          class="search-list"
           v-for="singer in searchVal"
           :key="singer.id"
           @click="getsong(singer.id)"
@@ -52,6 +60,7 @@
         </dd>
         <dt class="search-title">歌手</dt>
         <dd
+          class="search-list"
           v-for="songs in searchValSinger"
           :key="songs.id"
           @click="getsinger(songs.id)"
@@ -59,13 +68,16 @@
           {{ songs.name }}
         </dd>
         <dt class="search-title">专辑</dt>
-        <dd v-for="album in searchValAlbums" :key="album.id">
+        <dd
+          class="search-list"
+          v-for="album in searchValAlbums"
+          :key="album.id"
+        >
           {{ album.name }}
         </dd>
       </dl>
     </el-card>
   </div>
-  
 </template>
 <script>
 // 静态方法，获得随机数
@@ -73,6 +85,8 @@ import randomUtil from '../utils/randomUtil.js'
 // 本地localStorage存储搜索记录
 import store from '../utils/store.js'
 export default {
+  // 局部刷新组件要用到的数据
+  inject: ['reload'],
   data () {
     return {
       // 歌曲data
@@ -80,7 +94,6 @@ export default {
 
       // 歌手data
       searchValSinger: [],
-
       // 专辑
       searchValAlbums: [],
       search: '', // 当前输入框的值
@@ -146,7 +159,15 @@ export default {
         return this.$message.error('获取搜索专辑失败！')
       }
       this.searchValAlbums = result.data.result.albums
-      console.log(this.searchValAlbums + '专辑')
+    },
+    // 热门搜索
+    async popularSearches () {
+      const result = await this.$http.get('/search/hot')
+      if (result.data.code !== 200) {
+        return this.$message.error('获取热门搜索失败！')
+      } else {
+        this.hotSearchList = result.data.result.hots
+      }
     },
     // 点击搜索历史传给搜索栏
     historicalSearch (name) {
@@ -168,8 +189,13 @@ export default {
     enterSearchBoxHanlder () {
       clearTimeout(this.searchBoxTimeout)
     },
+    // 将推荐搜索传给输入框
+    popularRecommendation (name) {
+      this.search = name
+    },
     // 回车、搜索触发搜索事件（默认歌手）
-    searchHandler () {
+    searchHandler (id) {
+      this.getsinger(id)
       // 随机生成搜索历史tag式样
       let n = randomUtil.getRandomNumber(0, 5)
       let exist =
@@ -182,7 +208,9 @@ export default {
       }
       this.history = this.historySearchList.length !== 0
       // 默认搜索歌手
-      this.getsinger(this.searchValSinger.id)
+      // 歌手
+      this.getsinger(this.searchValSinger[0].id)
+      this.search = null
     },
     // 删除对应的记录
     closeHandler (search) {
@@ -210,6 +238,8 @@ export default {
     getsinger (id) {
       // 跳转到歌手详情
       this.$router.push('/singer/' + id)
+      // 重新渲染当前组件
+      this.reload()
     },
     // 歌单
     getalbum (id) {
@@ -221,6 +251,9 @@ export default {
         }
       })
     }
+  },
+  mounted () {
+    this.popularSearches()
   }
 }
 </script>
@@ -229,13 +262,15 @@ export default {
   top: 55px;
 }
 #search {
-  background-color: #37a097bd;
   border-radius: 0%;
 }
 .search-title {
   color: #bdbaba;
   font-size: 15px;
   margin-bottom: 5px;
+}
+.search-list:hover {
+  cursor: pointer;
 }
 .remove-history {
   color: #bdbaba;
@@ -251,5 +286,9 @@ export default {
   height: 300px;
   margin-top: 0px;
   padding-bottom: 20px;
+}
+// 热门推荐
+.popularRecommendation:hover {
+  cursor: pointer;
 }
 </style>

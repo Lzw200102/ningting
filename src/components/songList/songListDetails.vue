@@ -148,7 +148,7 @@ export default {
         console.log(this.rankingId+'//');
       } else {
         this.$message.warning(' 请登录后再操作！')
-        return this.$router.push('/login')
+        return this.$router.push('/logInPage')
       }
     },
 
@@ -176,7 +176,7 @@ export default {
         this.Songcontent = result.data.playlist.tracks
       } else {
         this.$message.warning(' 请登录后再操作！')
-        return this.$router.push('/login')
+        return this.$router.push('/logInPage')
       }
     },
 

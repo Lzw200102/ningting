@@ -126,6 +126,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.singer{
+    margin-bottom: 50px;
+}
 .singer-introduce {
   width: 100%;
   height: 400px;
@@ -134,6 +137,7 @@ export default {
 }
 .view {
   margin-top: 20px;
+  margin-bottom: 90px;
   transform: translateY(30px);
 }
 

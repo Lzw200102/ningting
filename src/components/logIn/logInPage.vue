@@ -17,6 +17,7 @@
               prefix-icon="el-icon-user-solid"
               autofocus
               v-model="ruleForm.phone"
+              @keyup.enter.native="login"
             />
           </el-form-item>
           <el-form-item prop="password"
@@ -26,10 +27,11 @@
               placeholder="输入密码"
               prefix-icon="el-icon-unlock"
               v-model="ruleForm.password"
+              @keyup.enter.native="login"
           /></el-form-item>
           <el-button class="f" title="无法使用">忘记密码?</el-button>
           <el-button class="f" title="无法使用">注册</el-button>
-          <el-button class="g" @click="login"> 登录 </el-button>
+          <el-button class="g" @click="login" > 登录 </el-button>
         </el-form>
       </div>
     </div>
@@ -120,7 +122,8 @@ export default {
   display: none !important;
 }
 .content {
-  padding: 91px 0;
+  height: 100%;
+  padding: 135px 0;
   /*设置背景渐变*/
   background: #ddd6f3; /* fallback for old browsers */
   background: -webkit-linear-gradient(

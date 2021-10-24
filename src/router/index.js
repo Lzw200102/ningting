@@ -169,7 +169,8 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       // 如果该路由不需要验证，那么直接往后走
-      Message.warning('请登录后再操作')
+      
+      Message.warning('请登录后再操作!')
       next('/logInPage')
     }
   } else {

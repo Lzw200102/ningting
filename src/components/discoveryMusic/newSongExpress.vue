@@ -9,7 +9,7 @@
         @click="playSong(item.id)"
       ></div>
       <!-- 歌曲图片、歌名、歌手 -->
-      <div class="song">
+      <div class="song" @click="songDetails(item.id)">
         <img v-lazy="item.picUrl + '?param=45y45'" alt="" />
         <div class="writing">
           <p class="writing-p">{{ item.name }}</p>
@@ -75,11 +75,14 @@ export default {
         }
         // 将当前播放的音乐数据传给vuex进行管理
         this.$store.commit('setMusicData', newsData)
-        // 路由跳转到歌曲详情并携带相关参数
-        this.$router.push({
-          name: 'SongDetails',
-          query: { id: id, data: newsData }
-        })
+      })
+    },
+    // 去歌曲详情
+    songDetails (id) {
+      // 路由跳转到歌曲详情并携带相关参数
+      this.$router.push({
+        name: 'SongDetails',
+        query: { id: id}
       })
     },
     // 热门歌手
@@ -121,6 +124,9 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
+    &:hover {
+      cursor: pointer;
+    }
     img {
       margin-top: 10px;
       border-radius: 15px;

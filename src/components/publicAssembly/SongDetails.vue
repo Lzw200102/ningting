@@ -124,11 +124,11 @@
 
 <script>
 // 引入监听下拉的js文件
-// import {
-//   getDocumentTop,
-//   getWindowHeight,
-//   getScrollHeight
-// } from '@/assets/js/downLoad.js'
+import {
+  getDocumentTop,
+  getWindowHeight,
+  getScrollHeight
+} from '../utils/downLoad.js'
 // 播放音乐的js
 import { playMisic } from '../plugins/PlayMisic.js'
 export default {
@@ -186,13 +186,13 @@ export default {
   },
   methods: {
     // // 下拉加载事件内容
-    // scrollHander () {
-    //   if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
-    //     this.loading = true
-    //     // 当滚动条到底时,这里是触发内容
-    //     this.getAllComment(this.Songid, this.offset)
-    //   }
-    // },
+    scrollHander () {
+      if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
+        this.loading = true
+        // 当滚动条到底时,这里是触发内容
+        this.getAllComment(this.Songid, this.offset)
+      }
+    },
     //  点赞+1
     setlike (val, e) {
       console.log(e)
@@ -230,7 +230,7 @@ export default {
         this.total++
       } else {
         this.$message.warning(' 请登录后再操作！')
-        return this.$router.push('/login')
+        return this.$router.push('/logInPage')
       }
     },
 

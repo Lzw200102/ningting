@@ -1,6 +1,6 @@
 <template>
-<!-- 公共 播放器 -->
-  <div>
+  <!-- 公共 播放器 -->
+  <div class="play">
     <img
       class="trigger"
       src="../images/music.png"
@@ -21,9 +21,9 @@
           @change="spliderSelect"
         />
       </div>
-      <div class="playMiun">
+      <div class="playMiun" @click="jump(SongId)">
         <!-- 歌曲头像 -->
-        <img  v-lazy="musicImg" />
+        <img v-lazy="musicImg" />
         <div class="song">
           <span>{{ musicTitle }}</span>
           <p>{{ musicSinger }}</p>
@@ -121,7 +121,7 @@ export default {
       coverPath: '', // 封面
       musicTitle: '', // 当前播放标题
       musicSinger: '', // 当前播放的歌手
-      musicImg: '', //  当前播放封面
+      musicImg: '../images/error.jpg', //  当前播放封面
       // 音频数据存放在次
       audio: [],
       musicdata: {},
@@ -163,7 +163,6 @@ export default {
         this.musicPlay('play')
         this.hide = true
         // this.index += 1
-        console.log(this.audio)
       }
     })
   },
@@ -291,7 +290,6 @@ export default {
             this.musicdata = this.audio[this.index - 1]
             this.box.src = this.musicdata.src
             this.index -= 1
-            console.log('别输出了' + this.audio[this.index - 1])
           } else {
             this.musicdata = this.audio[this.index]
             return this.$message.error('第一首了')
@@ -338,6 +336,14 @@ export default {
     // 点击隐藏播放器
     trigger () {
       this.hide = !this.hide
+    },
+    // 跳转到歌曲详情
+    jump(id){
+      // 路由跳转到歌曲详情并携带相关参数
+      this.$router.push({
+        name: 'SongDetails',
+        query: { id: id}
+      })
     }
   },
   // mounted 页面进入是完成初始化
@@ -357,7 +363,10 @@ export default {
   height: auto;
   position: fixed;
   bottom: 0;
-  // background-color: rgb(104, 209, 195);
+background: #FFA17F;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to bottom, #00223E, #FFA17F);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to bottom, #00223E, #FFA17F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   z-index: 999999;
 }
 // 触发器样式
@@ -367,6 +376,7 @@ export default {
   position: fixed;
   bottom: 100px;
   left: 30px;
+  z-index: 9000;
   &:hover {
     cursor: pointer;
   }

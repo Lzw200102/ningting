@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <listsong :SearchSongData="hotSongs" />
   </div>
 </template>
@@ -142,4 +142,5 @@ ul {
   display: inline-block;
   color: red;
 }
+
 </style>

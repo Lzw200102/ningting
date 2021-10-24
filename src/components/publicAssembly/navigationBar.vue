@@ -53,7 +53,6 @@
         </el-col>
       </el-row>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -68,7 +67,7 @@ export default {
   },
   data () {
     return {
-      activeIndex: '1',
+      activeIndex: '/',
       input: '',
       isAvatar: true
     }
@@ -129,5 +128,9 @@ export default {
 }
 .el-icon-user {
   color: rgb(104, 209, 195);
+}
+/* 去除打包后element的样式 */
+.el-menu.el-menu--horizontal {
+  border-bottom: 0;
 }
 </style>
