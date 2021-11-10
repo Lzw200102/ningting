@@ -2,12 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 
-// 导入axios
-import axios from 'axios'
-// 引入vuex中的store
-import store from './store/index'
-// 配置项Vue-Lazyload
-import VueLazyload from 'vue-lazyload'
 // 引入阿里图片iocn
 import './assets/iocn/iconfont.css'
 // 引入element// 导入message
@@ -16,7 +10,12 @@ import ElementUI, { Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/zh-CN'
 import router from './router'
-
+// 配置项Vue-Lazyload 图片懒加载
+import VueLazyload from 'vue-lazyload'
+// 导入axios
+import axios from 'axios'
+// 引入vuex中的store
+import store from './store/index'
 import App from './App'
 
 // 挂载到$message上
@@ -32,7 +31,7 @@ Vue.use(VueLazyload, {
 })
 // 错误提示
 Vue.config.productionTip = false
-// 配置请求的跟路径
+// 配置请求的根路径
 axios.defaults.baseURL = 'http://cloud-music.pl-fe.cn/'
 // 跨域优化
 // axios.defaults.headers.get['Content-Type'] = 'text/html'
