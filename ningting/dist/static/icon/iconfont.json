@@ -1,0 +1,93 @@
+{
+  "id": "2836817",
+  "name": "柠听",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "仿网易云音乐",
+  "glyphs": [
+    {
+      "icon_id": "5090378",
+      "name": "柠檬",
+      "font_class": "ningmeng1",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "23070801",
+      "name": "面性柠檬",
+      "font_class": "mianxingningmeng",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "3195596",
+      "name": "柠檬",
+      "font_class": "ningmeng",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "2767690",
+      "name": "此时此刻",
+      "font_class": "icon-",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "2767705",
+      "name": "下一首",
+      "font_class": "icon-1",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "2767706",
+      "name": "声音",
+      "font_class": "icon-2",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "2767707",
+      "name": "上一首",
+      "font_class": "icon-3",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "2767708",
+      "name": "暂停",
+      "font_class": "icon-4",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "2767709",
+      "name": "单曲循环",
+      "font_class": "icon-5",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "2767710",
+      "name": "列表循环",
+      "font_class": "icon-6",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "2767712",
+      "name": "随机播放",
+      "font_class": "icon-7",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "2767718",
+      "name": "播放",
+      "font_class": "icon-8",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    }
+  ]
+}
